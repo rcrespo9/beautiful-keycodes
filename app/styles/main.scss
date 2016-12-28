@@ -8,6 +8,7 @@ body,
 }
 
 body {
+  overflow: hidden;
   background: #fafafa;
   color: #333;
   text-align: center;
@@ -28,7 +29,9 @@ body {
 }
 
 .stage__keycode {
-  margin-bottom: 1em;
+  font-size: 41.956vmin; // perfect fourth on modular scale
+  line-height: 1;
+  margin-bottom: 0;
   font-family: 'Old Standard TT', Georgia, Times, serif;
 }
 
