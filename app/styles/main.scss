@@ -7,11 +7,18 @@ body,
   height: 100%;
 }
 
+html,
 body {
+  font-size: 16px;
   overflow: hidden;
-  background: #fafafa;
-  color: #333;
+}
+
+body {
+  background: #281A29;
+  color: #fefefe;
   text-align: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .stage {
@@ -41,7 +48,14 @@ body {
 }
 
 .stage__key {
+  display: inline-block;
   margin: 0;
+  padding: .317em .75em .422em;
+  border: 1px solid;
+  border-radius: 4px;
+  color: #FF3C91;
+  font-size: 1.777em;
+  text-transform: lowercase;
 }
 
 .attribution {
@@ -49,9 +63,11 @@ body {
   left: 0;
   bottom: 1em;
   width: 100%;
+  font-size: 1.333em;
 }
 
 .attribution__text a {
+  color: #FF3C91;
   font-weight: 700;
   text-decoration: none;
 }
