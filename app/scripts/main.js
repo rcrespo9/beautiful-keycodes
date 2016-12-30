@@ -29,37 +29,57 @@ window.addEventListener('keydown', function(e) {
 	text.innerHTML = keyFormatter(keyCode); 
 });
 
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
 function drawShapes() {
   const canvas = document.getElementById('js-particles');
   if (canvas.getContext) {
     const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
     const strokeWidth = 3;
     const darkBlue = '#16243c';
-    let triangleXPos = 70;
-    let triangleYPos = 20;
 
     // circle
-    ctx.beginPath();
-    ctx.arc(75, 75, 6, 0, Math.PI * 2, false);
-    ctx.lineWidth = strokeWidth;
-    ctx.strokeStyle = darkBlue;
-    ctx.stroke();
+    for(let i = 0; i < 30; i++) {
+    	ctx.beginPath();
+	   	ctx.arc(getRandomArbitrary(0, canvas.width), getRandomArbitrary(0, canvas.height), 6, 0, Math.PI * 2, false);
+	    ctx.lineWidth = strokeWidth;
+	    ctx.strokeStyle = darkBlue;
+	    ctx.stroke();
+	    ctx.closePath();
+    }
 
     // square
-    ctx.beginPath();
-    ctx.rect(30, 30, 12, 12);
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = darkBlue;
-    ctx.stroke();
+    for(let i = 0; i < 30; i++) {
+	    ctx.beginPath();
+	    ctx.rotate(360);
+	    ctx.rect(getRandomArbitrary(0, canvas.width), getRandomArbitrary(0, canvas.height), 12, 12);
+	    ctx.lineWidth = 3;
+	    ctx.strokeStyle = darkBlue;
+	    ctx.stroke();
+	    ctx.closePath();
+	}
 
     // triangle
-    ctx.beginPath();
-    ctx.fillStyle = darkBlue;
-    ctx.moveTo(triangleXPos, triangleYPos);
-    ctx.lineTo(triangleXPos - 10, triangleYPos + 12); 
-    ctx.lineTo(triangleXPos + 10, triangleYPos + 12);
-    ctx.fill();
+    for(let i = 0; i < 40; i++) {
+	    let triangleXPos = getRandomArbitrary(0, canvas.width);
+	    let triangleYPos = getRandomArbitrary(0, canvas.height);
+
+	    ctx.beginPath();
+	    ctx.rotate(360);
+	    ctx.fillStyle = darkBlue;
+	    ctx.moveTo(triangleXPos, triangleYPos);
+	    ctx.lineTo(triangleXPos - 10, triangleYPos + 12); 
+	    ctx.lineTo(triangleXPos + 10, triangleYPos + 12);
+	    ctx.fill();
+	    ctx.closePath();
+	}
   }
+
 }
 
 drawShapes();
