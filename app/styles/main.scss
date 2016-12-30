@@ -45,6 +45,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.wrapper {
+  position: relative;
+  z-index: 2;
+}
+
 /*------------------------------------*\
   #KEYCODE STAGE
 \*------------------------------------*/
@@ -102,6 +107,18 @@ body {
 
 .attribution__text {
   margin: 0;
+}
+
+/*------------------------------------*\
+  #PARTICLES
+\*------------------------------------*/
+.particles {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
 }
 
 /*------------------------------------*\
