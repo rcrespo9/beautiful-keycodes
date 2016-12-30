@@ -33,8 +33,10 @@ function getRandomArbitrary(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-function drawShapes() {
+function drawShapes(keyCodeNum = 36) {
   const canvas = document.getElementById('js-particles');
+  let numShapes = Math.ceil((keyCodeNum / 3) * 1) / 1;
+
   if (canvas.getContext) {
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -44,7 +46,7 @@ function drawShapes() {
     const darkBlue = '#16243c';
 
     // circle
-    for(let i = 0; i < 30; i++) {
+    for(let i = 0; i < numShapes; i++) {
     	ctx.beginPath();
 	   	ctx.arc(getRandomArbitrary(0, canvas.width), getRandomArbitrary(0, canvas.height), 6, 0, Math.PI * 2, false);
 	    ctx.lineWidth = strokeWidth;
@@ -54,7 +56,7 @@ function drawShapes() {
     }
 
     // square
-    for(let i = 0; i < 30; i++) {
+    for(let i = 0; i < numShapes; i++) {
 	    ctx.beginPath();
 	    ctx.rotate(360);
 	    ctx.rect(getRandomArbitrary(0, canvas.width), getRandomArbitrary(0, canvas.height), 12, 12);
@@ -65,7 +67,7 @@ function drawShapes() {
 	}
 
     // triangle
-    for(let i = 0; i < 40; i++) {
+    for(let i = 0; i < numShapes; i++) {
 	    let triangleXPos = getRandomArbitrary(0, canvas.width);
 	    let triangleYPos = getRandomArbitrary(0, canvas.height);
 
@@ -82,4 +84,4 @@ function drawShapes() {
 
 }
 
-drawShapes();
+drawShapes(50);
