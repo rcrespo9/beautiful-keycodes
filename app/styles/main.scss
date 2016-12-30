@@ -3,7 +3,11 @@
 
 // perfect fourth on modular scale
 
-$pink: #FF3C91;
+$pink: #fd7468;
+
+/*------------------------------------*\
+  #GLOBAL
+\*------------------------------------*/
 
 *,
 *:before,
@@ -13,6 +17,7 @@ $pink: #FF3C91;
 
 html, 
 body,
+.wrapper,
 .stage {
   height: 100%;
 }
@@ -25,15 +30,24 @@ body {
   @media(min-width: 40em) {
     font-size: 16px;
   }
+
+  @media(min-width: 105em) {
+    font-size: 18px;
+  }
 }
 
 body {
-  background: #281A29;
-  color: #fefefe;
+  background: #fff;
+  color: #7b869c;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   text-align: center;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/*------------------------------------*\
+  #KEYCODE STAGE
+\*------------------------------------*/
 
 .stage {
   display: table;
@@ -50,15 +64,11 @@ body {
 }
 
 .stage__keycode {
+  color: #16243c;
   font-size: 41.956vmin;
   line-height: 1;
   margin-bottom: 0;
   font-family: 'Old Standard TT', Georgia, Times, serif;
-}
-
-.stage__key,
-.attribution {
-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; 
 }
 
 .stage__key {
@@ -71,6 +81,10 @@ body {
   font-size: 1.777rem;
   text-transform: lowercase;
 }
+
+/*------------------------------------*\
+  #ATTRIBUTION
+\*------------------------------------*/
 
 .attribution {
   position: absolute;
@@ -89,6 +103,10 @@ body {
 .attribution__text {
   margin: 0;
 }
+
+/*------------------------------------*\
+  #BROWSER UPGRADE
+\*------------------------------------*/
 
 .browserupgrade {
   margin: 0.2rem 0;

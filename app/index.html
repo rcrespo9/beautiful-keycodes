@@ -12,6 +12,7 @@
 
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/normalize-css/normalize.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -28,16 +29,20 @@
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     
-    <div class="stage">
-      <div class="stage__inner">
-        <p class="stage__keycode" id="js-keycode"></p>
-        <p class="stage__key" id="js-key">Starting typing to see keycode</p>
+    <div class="wrapper">
+      <div class="stage">
+        <div class="stage__inner">
+          <p class="stage__keycode" id="js-keycode"></p>
+          <p class="stage__key" id="js-key">Starting typing to see keycode</p>
+        </div>
+      </div>
+
+      <div class="attribution">
+        <p class="attribution__text">Made in New York City by <a href="http://rudycrespo.com" id="js-attribution-name" target="_blank">Rudy Crespo</a></p>
       </div>
     </div>
 
-    <div class="attribution">
-      <p class="attribution__text">Made in New York City by <a href="http://rudycrespo.com" id="js-attribution-name" target="_blank">Rudy Crespo</a></p>
-    </div>
+    <canvas class="particles" id="js-particles"></canvas>
     
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
