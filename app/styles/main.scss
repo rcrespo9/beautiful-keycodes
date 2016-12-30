@@ -1,6 +1,16 @@
 // bower:scss
 // endbower
 
+// perfect fourth on modular scale
+
+$pink: #FF3C91;
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
 html, 
 body,
 .stage {
@@ -9,8 +19,12 @@ body,
 
 html,
 body {
-  font-size: 16px;
+  font-size: 10px;
   overflow: hidden;
+
+  @media(min-width: 40em) {
+    font-size: 16px;
+  }
 }
 
 body {
@@ -36,7 +50,7 @@ body {
 }
 
 .stage__keycode {
-  font-size: 41.956vmin; // perfect fourth on modular scale
+  font-size: 41.956vmin;
   line-height: 1;
   margin-bottom: 0;
   font-family: 'Old Standard TT', Georgia, Times, serif;
@@ -50,24 +64,24 @@ body {
 .stage__key {
   display: inline-block;
   margin: 0;
-  padding: .317em .75em .422em;
+  padding: .563rem 1.333rem .75rem;
   border: 1px solid;
   border-radius: 4px;
-  color: #FF3C91;
-  font-size: 1.777em;
+  color: $pink;
+  font-size: 1.777rem;
   text-transform: lowercase;
 }
 
 .attribution {
   position: absolute;
   left: 0;
-  bottom: 1em;
+  bottom: 1rem;
   width: 100%;
-  font-size: 1.333em;
+  font-size: 1.333rem;
 }
 
 .attribution__text a {
-  color: #FF3C91;
+  color: $pink;
   font-weight: 700;
   text-decoration: none;
 }
