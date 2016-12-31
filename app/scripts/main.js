@@ -34,6 +34,9 @@ function getRandomNum(min, max) {
 }
 
 const canvas = document.getElementById('js-particles');
+	  canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
 const ctx = canvas.getContext('2d');
 const globalLineWidth = 3;
 const darkBlue = '#16243c';
@@ -43,19 +46,32 @@ function Circle(radius, width, xPos, yPos) {
 	this.radius = radius;
 	this,width = width;
 	this.xPos = xPos;
-	this.yPos = yPos;	
-	this.counter = 0;
+	this.yPos = yPos;
+
+	this.counterX = 0;
+	this.counterY = 0;	
 }
 
 Circle.prototype.update = function() {
-	this.counter++;
-	
+	this.counterX++;
+	this.counterY++;
+
     ctx.beginPath();
-   	ctx.arc(this.xPos + this.counter, this.yPos + this.counter, this.radius, 0, Math.PI * 2, false);
+   	ctx.arc(this.xPos, this.yPos, this.radius, 0, Math.PI * 2, false);
     ctx.lineWidth = globalLineWidth;
     ctx.strokeStyle = darkBlue;
     ctx.stroke();
-    ctx.closePath();	
+    ctx.closePath();
+
+    if(this.xPos + this.counterX > ctx.canvas.width - this.radius || this.xPos > ctx.canvas.width - this.radius) {
+        this.counterX = -this.counterX;
+    }
+    if(this.yPos + this.counterY > ctx.canvas.height - this.radius || this.yPos + this.counterY < this.radius) {
+        this.counterY = -this.counterY;
+    }
+
+    this.xPos += this.counterX;
+    this.yPos += this.counterY;
 }
 
 function Square(width, height, xPos, yPos) {
@@ -132,5 +148,3 @@ function executeFrame() {
 
     requestAnimationFrame(executeFrame);
 }
-
-// executeFrame();
