@@ -167,8 +167,9 @@ class Triangle {
 
 		ctx.save();
 	    ctx.beginPath();
-	    // ctx.translate(xCoordsAvg, yCoordsAvg);
-	    // ctx.rotate(convertToRadians(this.angle += 2));
+	    ctx.translate(xCoordsAvg, yCoordsAvg);
+	    ctx.rotate(convertToRadians(this.angle += 2));
+	    ctx.translate(-xCoordsAvg, -yCoordsAvg);
 	    ctx.fillStyle = darkBlue;
 	    ctx.moveTo(triangleCoords.firstCoord.x, triangleCoords.firstCoord.y);
 	    ctx.lineTo(triangleCoords.secondCoord.x, triangleCoords.secondCoord.y); 
@@ -236,19 +237,19 @@ function executeFrame() {
 	for(let i = 0; i < circles.length; i++) {
 		let circle = circles[i];
 		circle.draw();
-		// circle.startAnimation();
+		circle.startAnimation();
 	}
 
 	for(let i = 0; i < squares.length; i++) {
 		let square = squares[i];
 		square.draw();
-		// square.startAnimation();
+		square.startAnimation();
 	}
 
 	for(let i = 0; i < triangles.length; i++) {
 		let triangle = triangles[i];
 		triangle.draw();
-		// triangle.startAnimation();
+		triangle.startAnimation();
 	}
 
     requestAnimationFrame(executeFrame);
