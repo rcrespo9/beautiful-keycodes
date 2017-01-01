@@ -35,14 +35,19 @@ function getRandomNum(min, max) {
   return Math.random() * (max - min) + min;
 }
 
+function convertToRadians(degree) {
+    return degree * (Math.PI / 180);
+}
+
 // shapes
 const canvas = document.getElementById('js-particles');
-	  canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
 const ctx = canvas.getContext('2d');
 const globalLineWidth = 3;
 const darkBlue = '#16243c';
+const speed = 2;
 let circles = [];
 let squares = [];
 let triangles = [];
@@ -91,9 +96,14 @@ class Square {
 	}
 
 	draw() {
+		const halfLength = this.length / 2;
+
 		ctx.save();
 		ctx.beginPath();
-	    ctx.rect(this.xPos, this.yPos, this.length, this.length);
+		ctx.translate(this.xPos, this.yPos);
+		ctx.translate(halfLength, halfLength);
+	    ctx.rotate(convertToRadians(this.angle += 2));
+	    ctx.rect(halfLength, halfLength, this.length, this.length);
 	    ctx.lineWidth = globalLineWidth;
 	    ctx.strokeStyle = darkBlue;
 	    ctx.stroke();
