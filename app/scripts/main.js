@@ -1,5 +1,6 @@
 'use strict';
 
+// keycode display
 const number = document.getElementById('js-keycode');
 const text = document.getElementById('js-key');
 
@@ -29,10 +30,12 @@ window.addEventListener('keydown', function(e) {
 	text.innerHTML = keyFormatter(keyCode); 
 });
 
+// random number function
 function getRandomNum(min, max) {
   return Math.random() * (max - min) + min;
 }
 
+// shapes
 const canvas = document.getElementById('js-particles');
 	  canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -50,6 +53,8 @@ class Circle {
 		this,width = width;
 		this.xPos = xPos;
 		this.yPos = yPos;
+		this.dx = 2;
+		this.dy = -2;
 	}
 
 	draw() {
@@ -60,13 +65,28 @@ class Circle {
 	    ctx.stroke();
 	    ctx.closePath();	
 	}
+
+	startAnimation() {
+		if(this.xPos + this.dx > canvas.width - this.radius || this.xPos + this.dx < this.radius) {
+			this.dx = -this.dx;
+		}
+
+		if(this.yPos + this.dy > canvas.height - this.radius || this.yPos + this.dy < this.radius) {
+			this.dy = -this.dy;
+		}
+
+		this.xPos += this.dx;
+		this.yPos += this.dy;
+	}
 }
 
 class Square {
 	constructor(length, xPos, yPos) {
 		this.length = length;
 		this.xPos = xPos;
-		this.yPos = yPos;	
+		this.yPos = yPos;
+		this.dx = 2;
+		this.dy = -2;	
 	}
 
 	draw() {
@@ -77,6 +97,19 @@ class Square {
 	    ctx.stroke();
 	    ctx.closePath();		
 	}
+
+	startAnimation() {
+		if(this.xPos + this.dx > canvas.width - this.length / 2 || this.xPos + this.dx < this.length / 2) {
+			this.dx = -this.dx;
+		}
+
+		if(this.yPos + this.dy > canvas.height - this.length / 2 || this.yPos + this.dy < this.length / 2) {
+			this.dy = -this.dy;
+		}
+
+		this.xPos += this.dx;
+		this.yPos += this.dy;
+	}
 }
 
 class Triangle {
@@ -84,7 +117,9 @@ class Triangle {
 		this.xVar = xVar;
 		this.yVar = yVar;
 		this.xPos = xPos;
-		this.yPos = yPos;	
+		this.yPos = yPos;
+		this.dx = 2;
+		this.dy = -2;	
 	}
 
 	draw() {
@@ -95,6 +130,19 @@ class Triangle {
 	    ctx.lineTo(this.xPos + this.xVar, this.yPos + this.yVar);
 	    ctx.fill();
 	    ctx.closePath();		
+	}
+
+	startAnimation() {
+		if(this.xPos + this.dx > canvas.width || this.xPos + this.dx < 0) {
+			this.dx = -this.dx;
+		}
+
+		if(this.yPos + this.dy > canvas.height|| this.yPos + this.dy < 0) {
+			this.dy = -this.dy;
+		}
+
+		this.xPos += this.dx;
+		this.yPos += this.dy;
 	}
 }
 
@@ -142,16 +190,19 @@ function executeFrame() {
 	for(let i = 0; i < circles.length; i++) {
 		let circle = circles[i];
 		circle.draw();
+		circle.startAnimation();
 	}
 
 	for(let i = 0; i < squares.length; i++) {
 		let square = squares[i];
 		square.draw();
+		square.startAnimation();
 	}
 
 	for(let i = 0; i < triangles.length; i++) {
 		let triangle = triangles[i];
 		triangle.draw();
+		triangle.startAnimation();
 	}
 
     requestAnimationFrame(executeFrame);
