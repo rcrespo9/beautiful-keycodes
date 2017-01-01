@@ -87,23 +87,26 @@ class Square {
 		this.yPos = yPos;
 		this.dx = 2;
 		this.dy = -2;	
+		this.angle = 0;
 	}
 
 	draw() {
+		ctx.save();
 		ctx.beginPath();
 	    ctx.rect(this.xPos, this.yPos, this.length, this.length);
 	    ctx.lineWidth = globalLineWidth;
 	    ctx.strokeStyle = darkBlue;
 	    ctx.stroke();
-	    ctx.closePath();		
+	    ctx.closePath();	
+	    ctx.restore();
 	}
 
 	startAnimation() {
-		if(this.xPos + this.dx > canvas.width - this.length / 2 || this.xPos + this.dx < this.length / 2) {
+		if(this.xPos + this.dx > canvas.width - this.length || this.xPos + this.dx < this.length) {
 			this.dx = -this.dx;
 		}
 
-		if(this.yPos + this.dy > canvas.height - this.length / 2 || this.yPos + this.dy < this.length / 2) {
+		if(this.yPos + this.dy > canvas.height - this.length || this.yPos + this.dy < this.length) {
 			this.dy = -this.dy;
 		}
 
@@ -133,11 +136,11 @@ class Triangle {
 	}
 
 	startAnimation() {
-		if(this.xPos + this.dx > canvas.width || this.xPos + this.dx < 0) {
+		if(this.xPos + this.dx > canvas.width - this.yVar || this.xPos + this.dx < this.yVar) {
 			this.dx = -this.dx;
 		}
 
-		if(this.yPos + this.dy > canvas.height|| this.yPos + this.dy < 0) {
+		if(this.yPos + this.dy > canvas.height - this.yVar || this.yPos + this.dy < this.yVar) {
 			this.dy = -this.dy;
 		}
 
