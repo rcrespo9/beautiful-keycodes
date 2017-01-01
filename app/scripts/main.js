@@ -41,59 +41,67 @@ const ctx = canvas.getContext('2d');
 const globalLineWidth = 3;
 const darkBlue = '#16243c';
 let circles = [];
+let squares = [];
+let triangles = [];
 
-function Circle(radius, width, xPos, yPos) {
-	this.radius = radius;
-	this,width = width;
-	this.xPos = xPos;
-	this.yPos = yPos;
+class Circle {
+	constructor(radius, width, xPos, yPos) {
+		this.radius = radius;
+		this,width = width;
+		this.xPos = xPos;
+		this.yPos = yPos;
+	}
 
-	this.counterX = 0;
-	this.counterY = 0;	
+	draw() {
+	    ctx.beginPath();
+	   	ctx.arc(this.xPos, this.yPos, this.radius, 0, Math.PI * 2, false);
+	    ctx.lineWidth = globalLineWidth;
+	    ctx.strokeStyle = darkBlue;
+	    ctx.stroke();
+	    ctx.closePath();	
+	}
 }
 
-Circle.prototype.update = function() {
-	this.counterX++;
-	this.counterY++;
+class Square {
+	constructor(length, xPos, yPos) {
+		this.length = length;
+		this.xPos = xPos;
+		this.yPos = yPos;	
+	}
 
-    ctx.beginPath();
-   	ctx.arc(this.xPos, this.yPos, this.radius, 0, Math.PI * 2, false);
-    ctx.lineWidth = globalLineWidth;
-    ctx.strokeStyle = darkBlue;
-    ctx.stroke();
-    ctx.closePath();
-
-    if(this.xPos + this.counterX > ctx.canvas.width - this.radius || this.xPos > ctx.canvas.width - this.radius) {
-        this.counterX = -this.counterX;
-    }
-    if(this.yPos + this.counterY > ctx.canvas.height - this.radius || this.yPos + this.counterY < this.radius) {
-        this.counterY = -this.counterY;
-    }
-
-    this.xPos += this.counterX;
-    this.yPos += this.counterY;
+	draw() {
+		ctx.beginPath();
+	    ctx.rect(this.xPos, this.yPos, this.length, this.length);
+	    ctx.lineWidth = globalLineWidth;
+	    ctx.strokeStyle = darkBlue;
+	    ctx.stroke();
+	    ctx.closePath();		
+	}
 }
 
-function Square(width, height, xPos, yPos) {
-	this.radius = radius;
-	this,width = width;
-	this.xPos = xPos;
-	this.yPos = yPos;	
+class Triangle {
+	constructor(xVar, yVar, xPos, yPos) {
+		this.xVar = xVar;
+		this.yVar = yVar;
+		this.xPos = xPos;
+		this.yPos = yPos;	
+	}
+
+	draw() {
+	    ctx.beginPath();
+	    ctx.fillStyle = darkBlue;
+	    ctx.moveTo(this.xPos, this.yPos);
+	    ctx.lineTo(this.xPos - this.xVar, this.yPos + this.yVar); 
+	    ctx.lineTo(this.xPos + this.xVar, this.yPos + this.yVar);
+	    ctx.fill();
+	    ctx.closePath();		
+	}
 }
 
-function Triangle(firstLine, secondLine, xPos, yPos) {
-	this.firstLine = firstLine;
-	this,secondLine = secondLine;
-	this.xPos = xPos;
-	this.yPos = yPos;	
-}
-
-var drawShapes = function(keycode = 10) {
+const drawShapes = function(keycode = 10) {
   let numShapes = Math.ceil((keycode / 3) * 1) / 1;
 
   if (canvas.getContext) {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
 
     // circle    	
  	for(let i = 0; i < numShapes; i++) {
@@ -104,46 +112,46 @@ var drawShapes = function(keycode = 10) {
  		circles.push(circle);
     }
 
-    executeFrame();
- //    // square	    
-	// for(let i = 0; i < numShapes; i++) {
-	// 	const squareRandX = getRandomNum(0, canvas.width);
-	//     const squareRandY = getRandomNum(0, canvas.height);
+    // square	    
+	for(let i = 0; i < numShapes; i++) {
+		let randX = getRandomNum(0, canvas.width);
+	    let randY = getRandomNum(0, canvas.height);
+	    let square = new Square(12, randX, randY);
 
-	//     ctx.beginPath();
-	//     ctx.rect(squareRandX, squareRandY, 12, 12);
-	//     ctx.lineWidth = 3;
-	//     ctx.strokeStyle = darkBlue;
-	//     ctx.stroke();
-	//     ctx.closePath();
-	// }
+	    squares.push(square);
+	}
 
- //    // triangle	    
-	// for(let i = 0; i < numShapes; i++) {
-	// 	const triangleRandX = getRandomNum(0, canvas.width);
-	//     const triangleRandY = getRandomNum(0, canvas.height);
+    // triangle	    
+	for(let i = 0; i < numShapes; i++) {
+		let randX = getRandomNum(0, canvas.width);
+	    let randY = getRandomNum(0, canvas.height);
+	    let triangle = new Triangle(10, 12, randX, randY);
 
-	//     ctx.beginPath();
-	//     ctx.fillStyle = darkBlue;
-	//     ctx.moveTo(triangleRandX, triangleRandY);
-	//     ctx.lineTo(triangleRandX - 10, triangleRandY + 12); 
-	//     ctx.lineTo(triangleRandX + 10, triangleRandY + 12);
-	//     ctx.fill();
-	//     ctx.closePath();
-	// }
+	    triangles.push(triangle);
+	}
+
+	executeFrame();
   }
 }
 
-console.log(circles);
-
-drawShapes(3);
+drawShapes(10);
 
 function executeFrame() {
 	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
 	for(let i = 0; i < circles.length; i++) {
 		let circle = circles[i];
-		circle.update();
+		circle.draw();
+	}
+
+	for(let i = 0; i < squares.length; i++) {
+		let square = squares[i];
+		square.draw();
+	}
+
+	for(let i = 0; i < triangles.length; i++) {
+		let triangle = triangles[i];
+		triangle.draw();
 	}
 
     requestAnimationFrame(executeFrame);
