@@ -101,9 +101,8 @@ class Square {
 		ctx.save();
 		ctx.beginPath();
 		ctx.translate(this.xPos, this.yPos);
-		ctx.translate(halfLength, halfLength);
 	    ctx.rotate(convertToRadians(this.angle += 2));
-	    ctx.rect(halfLength, halfLength, this.length, this.length);
+	    ctx.rect(-halfLength, -halfLength, this.length, this.length);
 	    ctx.lineWidth = globalLineWidth;
 	    ctx.strokeStyle = darkBlue;
 	    ctx.stroke();
@@ -132,17 +131,51 @@ class Triangle {
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.dx = 2;
-		this.dy = -2;	
+		this.dy = -2;
+		this.angle = 0;
 	}
 
 	draw() {
+		let triangleCoords = {
+			firstCoord: {
+				x: this.xPos,
+				y: this.yPos
+			},
+
+			secondCoord: {
+				x: this.xPos - this.xVar,
+				y: this.yPos + this.yVar
+			},
+
+			thirdCoord: {
+				x: this.xPos + this.xVar,
+				y: this.yPos + this.yVar
+			}
+		};
+
+		let xCoordsTotal = Object.keys(triangleCoords)
+									.map(key => triangleCoords[key].x)
+									.reduce((previous, current) => previous + current);									
+		let xCoordsAvg = xCoordsTotal / Object.keys(triangleCoords).length;
+
+
+		let yCoordsTotal = Object.keys(triangleCoords)
+									.map(key => triangleCoords[key].y)
+									.reduce((previous, current) => previous + current);									
+		let yCoordsAvg = yCoordsTotal / Object.keys(triangleCoords).length;
+
+
+		ctx.save();
 	    ctx.beginPath();
+	    // ctx.translate(xCoordsAvg, yCoordsAvg);
+	    // ctx.rotate(convertToRadians(this.angle += 2));
 	    ctx.fillStyle = darkBlue;
-	    ctx.moveTo(this.xPos, this.yPos);
-	    ctx.lineTo(this.xPos - this.xVar, this.yPos + this.yVar); 
-	    ctx.lineTo(this.xPos + this.xVar, this.yPos + this.yVar);
+	    ctx.moveTo(triangleCoords.firstCoord.x, triangleCoords.firstCoord.y);
+	    ctx.lineTo(triangleCoords.secondCoord.x, triangleCoords.secondCoord.y); 
+	    ctx.lineTo(triangleCoords.thirdCoord.x, triangleCoords.thirdCoord.y);
 	    ctx.fill();
-	    ctx.closePath();		
+	    ctx.closePath();
+	    ctx.restore();	
 	}
 
 	startAnimation() {
@@ -203,19 +236,19 @@ function executeFrame() {
 	for(let i = 0; i < circles.length; i++) {
 		let circle = circles[i];
 		circle.draw();
-		circle.startAnimation();
+		// circle.startAnimation();
 	}
 
 	for(let i = 0; i < squares.length; i++) {
 		let square = squares[i];
 		square.draw();
-		square.startAnimation();
+		// square.startAnimation();
 	}
 
 	for(let i = 0; i < triangles.length; i++) {
 		let triangle = triangles[i];
 		triangle.draw();
-		triangle.startAnimation();
+		// triangle.startAnimation();
 	}
 
     requestAnimationFrame(executeFrame);
