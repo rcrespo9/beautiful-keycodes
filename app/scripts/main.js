@@ -1,10 +1,19 @@
 'use strict';
 
+const canvas = document.getElementById('js-particles');
+const ctx = canvas.getContext('2d');
+const globalLineWidth = 3;
+const darkBlue = '#16243c';
+const speed = 2;
+let circles = [];
+let squares = [];
+let triangles = [];
+
 // keycode display
 const number = document.getElementById('js-keycode');
 const text = document.getElementById('js-key');
 
-window.addEventListener('keydown', function(e) {
+function keyCodeDisplay(e) {
 	let keyCode = e.keyCode;
 	let key = e.key;
 
@@ -27,8 +36,14 @@ window.addEventListener('keydown', function(e) {
 
 
 	number.innerHTML = keyCode;
-	text.innerHTML = keyFormatter(keyCode); 
-});
+	text.innerHTML = keyFormatter(keyCode);
+	circles = [];
+	squares = [];
+	triangles = [];
+	drawShapes(keyCode);
+}
+
+window.addEventListener('keydown', keyCodeDisplay);
 
 // random number function
 function getRandomNum(min, max) {
@@ -40,26 +55,14 @@ function convertToRadians(degree) {
 }
 
 // shapes
-const canvas = document.getElementById('js-particles');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-const ctx = canvas.getContext('2d');
-const globalLineWidth = 3;
-const darkBlue = '#16243c';
-const speed = 2;
-let circles = [];
-let squares = [];
-let triangles = [];
-
 class Circle {
 	constructor(radius, width, xPos, yPos) {
 		this.radius = radius;
-		this,width = width;
+		this.width = width;
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.dx = 2;
-		this.dy = -2;
+		this.dx = speed;
+		this.dy = -speed;
 	}
 
 	draw() {
@@ -90,8 +93,8 @@ class Square {
 		this.length = length;
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.dx = 2;
-		this.dy = -2;	
+		this.dx = speed;
+		this.dy = -speed;	
 		this.angle = 0;
 	}
 
@@ -101,7 +104,7 @@ class Square {
 		ctx.save();
 		ctx.beginPath();
 		ctx.translate(this.xPos, this.yPos);
-	    ctx.rotate(convertToRadians(this.angle += 2));
+	    ctx.rotate(convertToRadians(this.angle += speed));
 	    ctx.rect(-halfLength, -halfLength, this.length, this.length);
 	    ctx.lineWidth = globalLineWidth;
 	    ctx.strokeStyle = darkBlue;
@@ -130,8 +133,8 @@ class Triangle {
 		this.yVar = yVar;
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.dx = 2;
-		this.dy = -2;
+		this.dx = speed;
+		this.dy = -speed;
 		this.angle = 0;
 	}
 
@@ -168,7 +171,7 @@ class Triangle {
 		ctx.save();
 	    ctx.beginPath();
 	    ctx.translate(xCoordsAvg, yCoordsAvg);
-	    ctx.rotate(convertToRadians(this.angle += 2));
+	    ctx.rotate(convertToRadians(this.angle += speed));
 	    ctx.translate(-xCoordsAvg, -yCoordsAvg);
 	    ctx.fillStyle = darkBlue;
 	    ctx.moveTo(triangleCoords.firstCoord.x, triangleCoords.firstCoord.y);
@@ -193,8 +196,11 @@ class Triangle {
 	}
 }
 
-const drawShapes = function(keycode = 10) {
-  let numShapes = Math.ceil((keycode / 3) * 1) / 1;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+function drawShapes(keycode = 10) {
+  const numShapes = Math.ceil((keycode / 3) * 1) / 1;
 
   if (canvas.getContext) {
 
@@ -228,8 +234,6 @@ const drawShapes = function(keycode = 10) {
 	executeFrame();
   }
 }
-
-drawShapes(10);
 
 function executeFrame() {
 	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
