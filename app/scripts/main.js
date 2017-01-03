@@ -60,22 +60,6 @@ class KeyCodeDisplay {
 	}
 }
 
-// const particles = document.getElementById('js-particles');
-// var svgns = "http://www.w3.org/2000/svg";
-
-// for (var i = 0; i < 100; i++) {
-//     var x = Math.random() * 5000,
-//         y = Math.random() * 3000;
-
-//     var rect = document.createElementNS(svgns, 'rect');
-//     rect.setAttributeNS(null, 'x', x);
-//     rect.setAttributeNS(null, 'y', y);
-//     rect.setAttributeNS(null, 'height', '50');
-//     rect.setAttributeNS(null, 'width', '50');
-//     rect.setAttributeNS(null, 'stroke', '3');
-//     particles.appendChild(rect);
-// }
-
 const shapes = document.getElementById('js-shapes');
 shapes.setAttribute('width', window.innerWidth);
 shapes.setAttribute('height', window.innerHeight);
@@ -106,17 +90,82 @@ class Square extends Shape {
 		square.setAttributeNS(null, 'stroke', darkBlue);
 		square.setAttributeNS(null, 'stroke-width', globalLineWidth);
 		square.setAttributeNS(null, 'fill', 'none');
-		// shapes.appendChild(square);
 
 		return square;
 	}
 }
 
-let randX = utils.getRandomNum(0, shapesRect.width);
-let randY = utils.getRandomNum(0, shapesRect.height);
+class Circle extends Shape {
+	constructor(radius, xPos, yPos) {
+		super(xPos, yPos);
+		this.radius = radius;
+	}
 
-const square = new Square(12, randX, randY);
+	draw() {
+		let circle = document.createElementNS(svgns, 'circle');
+		circle.setAttributeNS(null, 'cx', this.xPos);
+		circle.setAttributeNS(null, 'cy', this.yPos);
+		circle.setAttributeNS(null, 'r', this.radius);
+		circle.setAttributeNS(null, 'stroke', darkBlue);
+		circle.setAttributeNS(null, 'stroke-width', globalLineWidth);
+		circle.setAttributeNS(null, 'fill', 'none');
+
+		return circle;
+	}
+}
+
+class Triangle extends Shape {
+	constructor(xVar, yVar, xPos, yPos) {
+		super(xPos, yPos);
+		this.xVar = xVar;
+		this.yVar = yVar;
+	}
+
+	draw() {
+		let triangleCoords = {
+			firstCoord: {
+				x: this.xPos,
+				y: this.yPos
+			},
+
+			secondCoord: {
+				x: this.xPos - this.xVar,
+				y: this.yPos + this.yVar
+			},
+
+			thirdCoord: {
+				x: this.xPos + this.xVar,
+				y: this.yPos + this.yVar
+			}
+		};
+
+		let xCoordsTotal = Object.keys(triangleCoords)
+									.map(key => triangleCoords[key].x)
+									.reduce((previous, current) => previous + current);
+		let xCoordsAvg = xCoordsTotal / Object.keys(triangleCoords).length;
+
+
+		let yCoordsTotal = Object.keys(triangleCoords)
+									.map(key => triangleCoords[key].y)
+									.reduce((previous, current) => previous + current);
+		let yCoordsAvg = yCoordsTotal / Object.keys(triangleCoords).length;
+
+		let triangle = document.createElementNS(svgns, 'polygon');
+		triangle.setAttributeNS(null, 'points', `${triangleCoords.firstCoord.x},${triangleCoords.firstCoord.y} ${triangleCoords.secondCoord.x},${triangleCoords.secondCoord.y} ${triangleCoords.thirdCoord.x},${triangleCoords.thirdCoord.y}`);
+		triangle.setAttributeNS(null, 'fill', darkBlue);
+
+		return triangle;
+	}
+}
+
+const square = new Square(12, utils.getRandomNum(0, shapesRect.width), utils.getRandomNum(0, shapesRect.height));
 shapes.appendChild(square.draw());
+
+const circle = new Circle(6, utils.getRandomNum(0, shapesRect.width), utils.getRandomNum(0, shapesRect.height));
+shapes.appendChild(circle.draw());
+
+const triangle = new Triangle(10, 12, utils.getRandomNum(0, shapesRect.width), utils.getRandomNum(0, shapesRect.height));
+shapes.appendChild(triangle.draw());
 
 class Main {
 	constructor() {
