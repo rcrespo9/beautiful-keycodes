@@ -1,5 +1,15 @@
 'use strict';
 
+const utils = {
+	getRandomNum: (min, max) => {
+		return Math.random() * (max - min) + min;
+	},
+
+	convertToRadians: (degree) => {
+		return degree * (Math.PI / 180);
+	}	
+}
+
 const canvas = document.getElementById('js-particles');
 const ctx = canvas.getContext('2d');
 const globalLineWidth = 3;
@@ -8,6 +18,7 @@ const speed = 2;
 let circles = [];
 let squares = [];
 let triangles = [];
+let initialized = false;
 
 // keycode display
 const number = document.getElementById('js-keycode');
@@ -41,18 +52,10 @@ function keyCodeDisplay(e) {
 	squares = [];
 	triangles = [];
 	drawShapes(keyCode);
+	initialized = true;
 }
 
 window.addEventListener('keydown', keyCodeDisplay);
-
-// random number function
-function getRandomNum(min, max) {
-  return Math.random() * (max - min) + min;
-}
-
-function convertToRadians(degree) {
-    return degree * (Math.PI / 180);
-}
 
 // shapes
 class Circle {
@@ -104,7 +107,7 @@ class Square {
 		ctx.save();
 		ctx.beginPath();
 		ctx.translate(this.xPos, this.yPos);
-	    ctx.rotate(convertToRadians(this.angle += speed));
+	    ctx.rotate(utils.convertToRadians(this.angle += speed));
 	    ctx.rect(-halfLength, -halfLength, this.length, this.length);
 	    ctx.lineWidth = globalLineWidth;
 	    ctx.strokeStyle = darkBlue;
@@ -171,7 +174,7 @@ class Triangle {
 		ctx.save();
 	    ctx.beginPath();
 	    ctx.translate(xCoordsAvg, yCoordsAvg);
-	    ctx.rotate(convertToRadians(this.angle += speed));
+	    ctx.rotate(utils.convertToRadians(this.angle += speed));
 	    ctx.translate(-xCoordsAvg, -yCoordsAvg);
 	    ctx.fillStyle = darkBlue;
 	    ctx.moveTo(triangleCoords.firstCoord.x, triangleCoords.firstCoord.y);
@@ -203,11 +206,10 @@ function drawShapes(keycode = 10) {
   const numShapes = Math.ceil((keycode / 3) * 1) / 1;
 
   if (canvas.getContext) {
-
     // circle    	
  	for(let i = 0; i < numShapes; i++) {
- 		let randX = getRandomNum(0, canvas.width);
-		let randY = getRandomNum(0, canvas.height);
+ 		let randX = utils.getRandomNum(0, canvas.width);
+		let randY = utils.getRandomNum(0, canvas.height);
  		let circle = new Circle(6, 0, randX, randY);
 
  		circles.push(circle);
@@ -215,8 +217,8 @@ function drawShapes(keycode = 10) {
 
     // square	    
 	for(let i = 0; i < numShapes; i++) {
-		let randX = getRandomNum(0, canvas.width);
-	    let randY = getRandomNum(0, canvas.height);
+		let randX = utils.getRandomNum(0, canvas.width);
+	    let randY = utils.getRandomNum(0, canvas.height);
 	    let square = new Square(12, randX, randY);
 
 	    squares.push(square);
@@ -224,14 +226,16 @@ function drawShapes(keycode = 10) {
 
     // triangle	    
 	for(let i = 0; i < numShapes; i++) {
-		let randX = getRandomNum(0, canvas.width);
-	    let randY = getRandomNum(0, canvas.height);
+		let randX = utils.getRandomNum(0, canvas.width);
+	    let randY = utils.getRandomNum(0, canvas.height);
 	    let triangle = new Triangle(10, 12, randX, randY);
 
 	    triangles.push(triangle);
 	}
-
-	executeFrame();
+	
+	if(initialized === false) {
+		executeFrame();
+	}
   }
 }
 
