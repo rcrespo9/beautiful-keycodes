@@ -1,10 +1,4 @@
 'use strict';
-const globalLineWidth = 3;
-const darkBlue = '#16243c';
-const speed = 2;
-let circles = [];
-let squares = [];
-let triangles = [];
 
 const utils = {
 	getRandomNum: (min, max) => {
@@ -66,12 +60,17 @@ shapes.setAttribute('height', window.innerHeight);
 
 const shapesRect = shapes.getBoundingClientRect();
 
-const svgns = "http://www.w3.org/2000/svg";
-
 class Shape {
 	constructor(xPos, yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
+		this.svgns = 'http://www.w3.org/2000/svg';
+		this.globalLineWidth = 3;
+		this.darkBlue = '#16243c';
+	}
+
+	draw() {
+		return this;
 	}
 }
 
@@ -82,13 +81,13 @@ class Square extends Shape {
 	}
 
 	draw() {
-		let square = document.createElementNS(svgns, 'rect');
+		let square = document.createElementNS(this.svgns, 'rect');
 		square.setAttributeNS(null, 'x', this.xPos);
 		square.setAttributeNS(null, 'y', this.yPos);
 		square.setAttributeNS(null, 'width', this.sideLength);
 		square.setAttributeNS(null, 'height', this.sideLength);
-		square.setAttributeNS(null, 'stroke', darkBlue);
-		square.setAttributeNS(null, 'stroke-width', globalLineWidth);
+		square.setAttributeNS(null, 'stroke', this.darkBlue);
+		square.setAttributeNS(null, 'stroke-width', this.globalLineWidth);
 		square.setAttributeNS(null, 'fill', 'none');
 
 		return square;
@@ -102,12 +101,12 @@ class Circle extends Shape {
 	}
 
 	draw() {
-		let circle = document.createElementNS(svgns, 'circle');
+		let circle = document.createElementNS(this.svgns, 'circle');
 		circle.setAttributeNS(null, 'cx', this.xPos);
 		circle.setAttributeNS(null, 'cy', this.yPos);
 		circle.setAttributeNS(null, 'r', this.radius);
-		circle.setAttributeNS(null, 'stroke', darkBlue);
-		circle.setAttributeNS(null, 'stroke-width', globalLineWidth);
+		circle.setAttributeNS(null, 'stroke', this.darkBlue);
+		circle.setAttributeNS(null, 'stroke-width', this.globalLineWidth);
 		circle.setAttributeNS(null, 'fill', 'none');
 
 		return circle;
@@ -152,10 +151,10 @@ class Triangle extends Shape {
 		// let xCoordsAvg = this.coordinatesAvg(triangleCoords, 'x');
 		// let yCoordsAvg = this.coordinatesAvg(triangleCoords, 'y');
 
-		let triangle = document.createElementNS(svgns, 'polygon');
+		let triangle = document.createElementNS(this.svgns, 'polygon');
 		// triangle.setAttributeNS(null, 'transform', `translate(${xCoordsAvg} ${yCoordsAvg}) rotate(45 ${xCoordsAvg} ${yCoordsAvg})`);
 		triangle.setAttributeNS(null, 'points', `${triangleCoords.firstCoord.x},${triangleCoords.firstCoord.y} ${triangleCoords.secondCoord.x},${triangleCoords.secondCoord.y} ${triangleCoords.thirdCoord.x},${triangleCoords.thirdCoord.y}`);
-		triangle.setAttributeNS(null, 'fill', darkBlue);
+		triangle.setAttributeNS(null, 'fill', this.darkBlue);
 
 		return triangle;
 	}
