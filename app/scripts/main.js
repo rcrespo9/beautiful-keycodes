@@ -1,13 +1,10 @@
 'use strict';
-const canvas = document.getElementById('js-particles');
-const ctx = canvas.getContext('2d');
 const globalLineWidth = 3;
 const darkBlue = '#16243c';
 const speed = 2;
 let circles = [];
 let squares = [];
 let triangles = [];
-let initialized = false;
 
 const utils = {
 	getRandomNum: (min, max) => {
@@ -59,15 +56,34 @@ class KeyCodeDisplay {
 
 			self.insertKeyCode(keyCode);
 			self.insertKey(keyCode, key);
-			circles = [];
-			squares = [];
-			triangles = [];
-			drawShapes(keyCode);
 		});
 	}
 }
 
-// shapes
+// const particles = document.getElementById('js-particles');
+// var svgns = "http://www.w3.org/2000/svg";
+
+// for (var i = 0; i < 100; i++) {
+//     var x = Math.random() * 5000,
+//         y = Math.random() * 3000;
+
+//     var rect = document.createElementNS(svgns, 'rect');
+//     rect.setAttributeNS(null, 'x', x);
+//     rect.setAttributeNS(null, 'y', y);
+//     rect.setAttributeNS(null, 'height', '50');
+//     rect.setAttributeNS(null, 'width', '50');
+//     rect.setAttributeNS(null, 'stroke', '3');
+//     particles.appendChild(rect);
+// }
+
+const shapes = document.getElementById('js-shapes');
+shapes.setAttribute('width', window.innerWidth);
+shapes.setAttribute('height', window.innerHeight);
+
+const shapesRect = shapes.getBoundingClientRect();
+
+const svgns = "http://www.w3.org/2000/svg";
+
 class Shape {
 	constructor(xPos, yPos) {
 		this.xPos = xPos;
@@ -75,207 +91,32 @@ class Shape {
 	}
 }
 
-class Circle extends Shape {
-	constructor(radius, width, xPos, yPos) {
-		super(xPos, yPos);
-		this.radius = radius;
-		this.width = width;
-		this.dx = speed;
-		this.dy = -speed;
-	}
-
-	draw() {
-	    ctx.beginPath();
-	   	ctx.arc(this.xPos, this.yPos, this.radius, 0, Math.PI * 2, false);
-	    ctx.lineWidth = globalLineWidth;
-	    ctx.strokeStyle = darkBlue;
-	    ctx.stroke();
-	    ctx.closePath();
-	}
-
-	startAnimation() {
-		if(this.xPos + this.dx > canvas.width - this.radius || this.xPos + this.dx < this.radius) {
-			this.dx = -this.dx;
-		}
-
-		if(this.yPos + this.dy > canvas.height - this.radius || this.yPos + this.dy < this.radius) {
-			this.dy = -this.dy;
-		}
-
-		this.xPos += this.dx;
-		this.yPos += this.dy;
-	}
-}
-
 class Square extends Shape {
-	constructor(length, xPos, yPos) {
+	constructor(sideLength, xPos, yPos) {
 		super(xPos, yPos);
-		this.length = length;
-		this.dx = speed;
-		this.dy = -speed;
-		this.angle = 0;
+		this.sideLength = sideLength;
 	}
 
 	draw() {
-		const halfLength = this.length / 2;
+		let square = document.createElementNS(svgns, 'rect');
+		square.setAttributeNS(null, 'x', this.xPos);
+		square.setAttributeNS(null, 'y', this.yPos);
+		square.setAttributeNS(null, 'width', this.sideLength);
+		square.setAttributeNS(null, 'height', this.sideLength);
+		square.setAttributeNS(null, 'stroke', darkBlue);
+		square.setAttributeNS(null, 'stroke-width', globalLineWidth);
+		square.setAttributeNS(null, 'fill', 'none');
+		// shapes.appendChild(square);
 
-		ctx.save();
-		ctx.beginPath();
-		ctx.translate(this.xPos, this.yPos);
-	    ctx.rotate(utils.convertToRadians(this.angle += speed));
-	    ctx.rect(-halfLength, -halfLength, this.length, this.length);
-	    ctx.lineWidth = globalLineWidth;
-	    ctx.strokeStyle = darkBlue;
-	    ctx.stroke();
-	    ctx.closePath();
-	    ctx.restore();
-	}
-
-	startAnimation() {
-		if(this.xPos + this.dx > canvas.width - this.length || this.xPos + this.dx < this.length) {
-			this.dx = -this.dx;
-		}
-
-		if(this.yPos + this.dy > canvas.height - this.length || this.yPos + this.dy < this.length) {
-			this.dy = -this.dy;
-		}
-
-		this.xPos += this.dx;
-		this.yPos += this.dy;
+		return square;
 	}
 }
 
-class Triangle extends Shape {
-	constructor(xVar, yVar, xPos, yPos) {
-		super(xPos, yPos);
-		this.xVar = xVar;
-		this.yVar = yVar;
-		this.dx = speed;
-		this.dy = -speed;
-		this.angle = 0;
-	}
+let randX = utils.getRandomNum(0, shapesRect.width);
+let randY = utils.getRandomNum(0, shapesRect.height);
 
-	draw() {
-		let triangleCoords = {
-			firstCoord: {
-				x: this.xPos,
-				y: this.yPos
-			},
-
-			secondCoord: {
-				x: this.xPos - this.xVar,
-				y: this.yPos + this.yVar
-			},
-
-			thirdCoord: {
-				x: this.xPos + this.xVar,
-				y: this.yPos + this.yVar
-			}
-		};
-
-		let xCoordsTotal = Object.keys(triangleCoords)
-									.map(key => triangleCoords[key].x)
-									.reduce((previous, current) => previous + current);
-		let xCoordsAvg = xCoordsTotal / Object.keys(triangleCoords).length;
-
-
-		let yCoordsTotal = Object.keys(triangleCoords)
-									.map(key => triangleCoords[key].y)
-									.reduce((previous, current) => previous + current);
-		let yCoordsAvg = yCoordsTotal / Object.keys(triangleCoords).length;
-
-
-		ctx.save();
-	    ctx.beginPath();
-	    ctx.translate(xCoordsAvg, yCoordsAvg);
-	    ctx.rotate(utils.convertToRadians(this.angle += speed));
-	    ctx.translate(-xCoordsAvg, -yCoordsAvg);
-	    ctx.fillStyle = darkBlue;
-	    ctx.moveTo(triangleCoords.firstCoord.x, triangleCoords.firstCoord.y);
-	    ctx.lineTo(triangleCoords.secondCoord.x, triangleCoords.secondCoord.y);
-	    ctx.lineTo(triangleCoords.thirdCoord.x, triangleCoords.thirdCoord.y);
-	    ctx.fill();
-	    ctx.closePath();
-	    ctx.restore();
-	}
-
-	startAnimation() {
-		if(this.xPos + this.dx > canvas.width - this.yVar || this.xPos + this.dx < this.yVar) {
-			this.dx = -this.dx;
-		}
-
-		if(this.yPos + this.dy > canvas.height - this.yVar || this.yPos + this.dy < this.yVar) {
-			this.dy = -this.dy;
-		}
-
-		this.xPos += this.dx;
-		this.yPos += this.dy;
-	}
-}
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-function drawShapes(keycode = 10) {
-  const numShapes = Math.ceil((keycode / 3) * 1) / 1;
-
-  if (canvas.getContext) {
-    // circle
- 	for(let i = 0, max = numShapes; i < max; i++) {
- 		let randX = utils.getRandomNum(0, canvas.width);
-		let randY = utils.getRandomNum(0, canvas.height);
- 		let circle = new Circle(6, 0, randX, randY);
-
- 		circles.push(circle);
-    }
-
-    // square
-	for(let i = 0, max = numShapes; i < max; i++) {
-		let randX = utils.getRandomNum(0, canvas.width);
-	    let randY = utils.getRandomNum(0, canvas.height);
-	    let square = new Square(12, randX, randY);
-
-	    squares.push(square);
-	}
-
-    // triangle
-	for(let i = 0, max = numShapes; i < max; i++) {
-		let randX = utils.getRandomNum(0, canvas.width);
-	    let randY = utils.getRandomNum(0, canvas.height);
-	    let triangle = new Triangle(10, 12, randX, randY);
-
-	    triangles.push(triangle);
-	}
-
-	if(initialized === false) {
-		executeFrame();
-	}
-  }
-}
-
-function executeFrame() {
-	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-	for(let i = 0, max = circles.length; i < max; i++) {
-		let circle = circles[i];
-		circle.draw();
-		// circle.startAnimation();
-	}
-
-	for(let i = 0, max = squares.length; i < max; i++) {
-		let square = squares[i];
-		square.draw();
-		// square.startAnimation();
-	}
-
-	for(let i = 0, max = triangles.length; i < max; i++) {
-		let triangle = triangles[i];
-		triangle.draw();
-		// triangle.startAnimation();
-	}
-
-    // requestAnimationFrame(executeFrame);
-}
+const square = new Square(12, randX, randY);
+shapes.appendChild(square.draw());
 
 class Main {
 	constructor() {
