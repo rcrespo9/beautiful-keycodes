@@ -1,4 +1,13 @@
 'use strict';
+const canvas = document.getElementById('js-particles');
+const ctx = canvas.getContext('2d');
+const globalLineWidth = 3;
+const darkBlue = '#16243c';
+const speed = 2;
+let circles = [];
+let squares = [];
+let triangles = [];
+let initialized = false;
 
 const utils = {
 	getRandomNum: (min, max) => {
@@ -42,8 +51,7 @@ class KeyCodeDisplay {
 	}
 
 	init() {
-		let self = this; // defining this as self in order to refer to internal methods within window event listener
-		console.log(KeyCodeDisplay);
+		const self = this; // defining this as self in order to refer to internal methods within window event listener
 
 		window.addEventListener('keydown', function(e) {
 			let keyCode = e.keyCode;
@@ -51,27 +59,27 @@ class KeyCodeDisplay {
 
 			self.insertKeyCode(keyCode);
 			self.insertKey(keyCode, key);
+			circles = [];
+			squares = [];
+			triangles = [];
+			drawShapes(keyCode);
 		});
 	}
 }
 
 // shapes
-const canvas = document.getElementById('js-particles');
-const ctx = canvas.getContext('2d');
-const globalLineWidth = 3;
-const darkBlue = '#16243c';
-const speed = 2;
-let circles = [];
-let squares = [];
-let triangles = [];
-let initialized = false;
-
-class Circle {
-	constructor(radius, width, xPos, yPos) {
-		this.radius = radius;
-		this.width = width;
+class Shape {
+	constructor(xPos, yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
+	}
+}
+
+class Circle extends Shape {
+	constructor(radius, width, xPos, yPos) {
+		super(xPos, yPos);
+		this.radius = radius;
+		this.width = width;
 		this.dx = speed;
 		this.dy = -speed;
 	}
@@ -99,11 +107,10 @@ class Circle {
 	}
 }
 
-class Square {
+class Square extends Shape {
 	constructor(length, xPos, yPos) {
+		super(xPos, yPos);
 		this.length = length;
-		this.xPos = xPos;
-		this.yPos = yPos;
 		this.dx = speed;
 		this.dy = -speed;
 		this.angle = 0;
@@ -138,12 +145,11 @@ class Square {
 	}
 }
 
-class Triangle {
+class Triangle extends Shape {
 	constructor(xVar, yVar, xPos, yPos) {
+		super(xPos, yPos);
 		this.xVar = xVar;
 		this.yVar = yVar;
-		this.xPos = xPos;
-		this.yPos = yPos;
 		this.dx = speed;
 		this.dy = -speed;
 		this.angle = 0;
@@ -253,22 +259,22 @@ function executeFrame() {
 	for(let i = 0, max = circles.length; i < max; i++) {
 		let circle = circles[i];
 		circle.draw();
-		circle.startAnimation();
+		// circle.startAnimation();
 	}
 
 	for(let i = 0, max = squares.length; i < max; i++) {
 		let square = squares[i];
 		square.draw();
-		square.startAnimation();
+		// square.startAnimation();
 	}
 
 	for(let i = 0, max = triangles.length; i < max; i++) {
 		let triangle = triangles[i];
 		triangle.draw();
-		triangle.startAnimation();
+		// triangle.startAnimation();
 	}
 
-    requestAnimationFrame(executeFrame);
+    // requestAnimationFrame(executeFrame);
 }
 
 class Main {
