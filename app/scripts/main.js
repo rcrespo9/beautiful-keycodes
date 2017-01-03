@@ -121,6 +121,16 @@ class Triangle extends Shape {
 		this.yVar = yVar;
 	}
 
+	coordinatesAvg(obj, coordinate) {
+		let total = Object.keys(obj)
+							.map(key => obj[key][coordinate])
+							.reduce((previous, current) => previous + current);
+
+		let avg = total / Object.keys(obj).length;
+
+		return avg;
+	}
+
 	draw() {
 		let triangleCoords = {
 			firstCoord: {
@@ -139,19 +149,11 @@ class Triangle extends Shape {
 			}
 		};
 
-		let xCoordsTotal = Object.keys(triangleCoords)
-									.map(key => triangleCoords[key].x)
-									.reduce((previous, current) => previous + current);
-		let xCoordsAvg = xCoordsTotal / Object.keys(triangleCoords).length;
-
-
-		let yCoordsTotal = Object.keys(triangleCoords)
-									.map(key => triangleCoords[key].y)
-									.reduce((previous, current) => previous + current);
-		let yCoordsAvg = yCoordsTotal / Object.keys(triangleCoords).length;
+		// let xCoordsAvg = this.coordinatesAvg(triangleCoords, 'x');
+		// let yCoordsAvg = this.coordinatesAvg(triangleCoords, 'y');
 
 		let triangle = document.createElementNS(svgns, 'polygon');
-		triangle.setAttributeNS(null, 'transform', `translate(${xCoordsAvg} ${yCoordsAvg}) rotate(45 ${xCoordsAvg} ${yCoordsAvg})`);
+		// triangle.setAttributeNS(null, 'transform', `translate(${xCoordsAvg} ${yCoordsAvg}) rotate(45 ${xCoordsAvg} ${yCoordsAvg})`);
 		triangle.setAttributeNS(null, 'points', `${triangleCoords.firstCoord.x},${triangleCoords.firstCoord.y} ${triangleCoords.secondCoord.x},${triangleCoords.secondCoord.y} ${triangleCoords.thirdCoord.x},${triangleCoords.thirdCoord.y}`);
 		triangle.setAttributeNS(null, 'fill', darkBlue);
 
