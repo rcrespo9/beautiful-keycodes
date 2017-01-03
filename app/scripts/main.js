@@ -1,15 +1,5 @@
 'use strict';
 
-const utils = {
-	getRandomNum: (min, max) => {
-		return Math.random() * (max - min) + min;
-	},
-
-	convertToRadians: (degree) => {
-		return degree * (Math.PI / 180);
-	}
-}
-
 class KeyCodeDisplay {
 	constructor(numberElId, textElId) {
 		this.numberElId = document.getElementById(numberElId);
@@ -54,12 +44,6 @@ class KeyCodeDisplay {
 	}
 }
 
-const shapes = document.getElementById('js-shapes');
-shapes.setAttribute('width', window.innerWidth);
-shapes.setAttribute('height', window.innerHeight);
-
-const shapesRect = shapes.getBoundingClientRect();
-
 class Shape {
 	constructor(xPos, yPos) {
 		this.xPos = xPos;
@@ -67,10 +51,6 @@ class Shape {
 		this.svgns = 'http://www.w3.org/2000/svg';
 		this.globalLineWidth = 3;
 		this.darkBlue = '#16243c';
-	}
-
-	draw() {
-		return this;
 	}
 }
 
@@ -160,14 +140,40 @@ class Triangle extends Shape {
 	}
 }
 
-const square = new Square(12, utils.getRandomNum(0, shapesRect.width), utils.getRandomNum(0, shapesRect.height));
-shapes.appendChild(square.draw());
+class ShapesGenerator {
+	constructor(numShapes) {
+		this.shapesSvg = document.getElementById('js-shapes');
+		this.shapesRect = this.shapesSvg.getBoundingClientRect();
+		this.shapesSvgWidth = this.shapesRect.width;
+		this.shapesSvgHeight = this.shapesRect.height;
+		this.numShapes = numShapes;
+	}
 
-const circle = new Circle(6, utils.getRandomNum(0, shapesRect.width), utils.getRandomNum(0, shapesRect.height));
-shapes.appendChild(circle.draw());
+	getRandomNum(min, max) {
+		return Math.random() * (max - min) + min;
+	}
 
-const triangle = new Triangle(10, 12, utils.getRandomNum(0, shapesRect.width), utils.getRandomNum(0, shapesRect.height));
-shapes.appendChild(triangle.draw());
+	fullScreenShapesSvg() {
+		this.shapesSvg.setAttribute('width', window.innerWidth);
+		this.shapesSvg.setAttribute('height', window.innerHeight);
+	}
+
+	buildShapes() {
+		// const square = new Square(12, utils.getRandomNum(0, shapesRect.width), utils.getRandomNum(0, shapesRect.height));
+		// shapes.appendChild(square.draw());
+
+		// const circle = new Circle(6, utils.getRandomNum(0, shapesRect.width), utils.getRandomNum(0, shapesRect.height));
+		// shapes.appendChild(circle.draw());
+
+		// const triangle = new Triangle(10, 12, utils.getRandomNum(0, shapesRect.width), utils.getRandomNum(0, shapesRect.height));
+		// shapes.appendChild(triangle.draw());
+	}
+
+	init() {
+		this.fullScreenShapesSvg();
+		this.buildShapes();
+	}
+}
 
 class Main {
 	constructor() {
