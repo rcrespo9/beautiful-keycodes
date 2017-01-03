@@ -10,6 +10,52 @@ const utils = {
 	}
 }
 
+class KeyCodeDisplay {
+	constructor(numberElId, textElId) {
+		this.numberElId = document.getElementById(numberElId);
+		this.textElId = document.getElementById(textElId);
+	}
+
+	keyFormatter(keycode, key) {
+		const specialKeys = {
+			20: 'caps lock',
+			32: 'spacebar',
+			37: 'arrow left',
+			38: 'arrow up',
+			39: 'arrow right',
+			40: 'arrow down'
+		};
+
+		if(specialKeys[keycode]) {
+			return specialKeys[keycode];
+		} else {
+			return key;
+		}
+	}
+
+	insertKeyCode(keycode) {
+		this.numberElId.innerHTML = keycode;
+	}
+
+	insertKey(keycode, key) {
+		this.textElId.innerHTML = this.keyFormatter(keycode, key);
+	}
+
+	init() {
+		let self = this; // defining this as self in order to refer to internal methods within window event listener
+		console.log(KeyCodeDisplay);
+
+		window.addEventListener('keydown', function(e) {
+			let keyCode = e.keyCode;
+			let key = e.key;
+
+			self.insertKeyCode(keyCode);
+			self.insertKey(keyCode, key);
+		});
+	}
+}
+
+// shapes
 const canvas = document.getElementById('js-particles');
 const ctx = canvas.getContext('2d');
 const globalLineWidth = 3;
@@ -20,44 +66,6 @@ let squares = [];
 let triangles = [];
 let initialized = false;
 
-// keycode display
-const number = document.getElementById('js-keycode');
-const text = document.getElementById('js-key');
-
-function keyCodeDisplay(e) {
-	let keyCode = e.keyCode;
-	let key = e.key;
-
-	function keyFormatter(keycode) {
-		var specialKeys = {
-			20: 'caps lock',
-			32: 'spacebar',
-			37: 'arrow left',
-			38: 'arrow up',
-			39: 'arrow right',
-			40: 'arrow down'
-		}
-
-		if(specialKeys[keycode]) {
-			return specialKeys[keycode];
-		} else {
-			return key;
-		}
-	}
-
-
-	number.innerHTML = keyCode;
-	text.innerHTML = keyFormatter(keyCode);
-	circles = [];
-	squares = [];
-	triangles = [];
-	drawShapes(keyCode);
-	initialized = true;
-}
-
-window.addEventListener('keydown', keyCodeDisplay);
-
-// shapes
 class Circle {
 	constructor(radius, width, xPos, yPos) {
 		this.radius = radius;
@@ -262,3 +270,12 @@ function executeFrame() {
 
     requestAnimationFrame(executeFrame);
 }
+
+class Main {
+	constructor() {
+		let keyCodeDisplay = new KeyCodeDisplay('js-keycode', 'js-key');
+		keyCodeDisplay.init();
+	}
+}
+
+document.addEventListener("DOMContentLoaded", (e) => new Main());
