@@ -7,7 +7,7 @@ const utils = {
 
 	convertToRadians: (degree) => {
 		return degree * (Math.PI / 180);
-	}	
+	}
 }
 
 const canvas = document.getElementById('js-particles');
@@ -39,7 +39,7 @@ function keyCodeDisplay(e) {
 		}
 
 		if(specialKeys[keycode]) {
-			return specialKeys[keycode]; 
+			return specialKeys[keycode];
 		} else {
 			return key;
 		}
@@ -74,7 +74,7 @@ class Circle {
 	    ctx.lineWidth = globalLineWidth;
 	    ctx.strokeStyle = darkBlue;
 	    ctx.stroke();
-	    ctx.closePath();	
+	    ctx.closePath();
 	}
 
 	startAnimation() {
@@ -97,7 +97,7 @@ class Square {
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.dx = speed;
-		this.dy = -speed;	
+		this.dy = -speed;
 		this.angle = 0;
 	}
 
@@ -112,7 +112,7 @@ class Square {
 	    ctx.lineWidth = globalLineWidth;
 	    ctx.strokeStyle = darkBlue;
 	    ctx.stroke();
-	    ctx.closePath();	
+	    ctx.closePath();
 	    ctx.restore();
 	}
 
@@ -161,13 +161,13 @@ class Triangle {
 
 		let xCoordsTotal = Object.keys(triangleCoords)
 									.map(key => triangleCoords[key].x)
-									.reduce((previous, current) => previous + current);									
+									.reduce((previous, current) => previous + current);
 		let xCoordsAvg = xCoordsTotal / Object.keys(triangleCoords).length;
 
 
 		let yCoordsTotal = Object.keys(triangleCoords)
 									.map(key => triangleCoords[key].y)
-									.reduce((previous, current) => previous + current);									
+									.reduce((previous, current) => previous + current);
 		let yCoordsAvg = yCoordsTotal / Object.keys(triangleCoords).length;
 
 
@@ -178,11 +178,11 @@ class Triangle {
 	    ctx.translate(-xCoordsAvg, -yCoordsAvg);
 	    ctx.fillStyle = darkBlue;
 	    ctx.moveTo(triangleCoords.firstCoord.x, triangleCoords.firstCoord.y);
-	    ctx.lineTo(triangleCoords.secondCoord.x, triangleCoords.secondCoord.y); 
+	    ctx.lineTo(triangleCoords.secondCoord.x, triangleCoords.secondCoord.y);
 	    ctx.lineTo(triangleCoords.thirdCoord.x, triangleCoords.thirdCoord.y);
 	    ctx.fill();
 	    ctx.closePath();
-	    ctx.restore();	
+	    ctx.restore();
 	}
 
 	startAnimation() {
@@ -206,8 +206,8 @@ function drawShapes(keycode = 10) {
   const numShapes = Math.ceil((keycode / 3) * 1) / 1;
 
   if (canvas.getContext) {
-    // circle    	
- 	for(let i = 0; i < numShapes; i++) {
+    // circle
+ 	for(let i = 0, max = numShapes; i < max; i++) {
  		let randX = utils.getRandomNum(0, canvas.width);
 		let randY = utils.getRandomNum(0, canvas.height);
  		let circle = new Circle(6, 0, randX, randY);
@@ -215,8 +215,8 @@ function drawShapes(keycode = 10) {
  		circles.push(circle);
     }
 
-    // square	    
-	for(let i = 0; i < numShapes; i++) {
+    // square
+	for(let i = 0, max = numShapes; i < max; i++) {
 		let randX = utils.getRandomNum(0, canvas.width);
 	    let randY = utils.getRandomNum(0, canvas.height);
 	    let square = new Square(12, randX, randY);
@@ -224,15 +224,15 @@ function drawShapes(keycode = 10) {
 	    squares.push(square);
 	}
 
-    // triangle	    
-	for(let i = 0; i < numShapes; i++) {
+    // triangle
+	for(let i = 0, max = numShapes; i < max; i++) {
 		let randX = utils.getRandomNum(0, canvas.width);
 	    let randY = utils.getRandomNum(0, canvas.height);
 	    let triangle = new Triangle(10, 12, randX, randY);
 
 	    triangles.push(triangle);
 	}
-	
+
 	if(initialized === false) {
 		executeFrame();
 	}
@@ -242,19 +242,19 @@ function drawShapes(keycode = 10) {
 function executeFrame() {
 	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-	for(let i = 0; i < circles.length; i++) {
+	for(let i = 0, max = circles.length; i < max; i++) {
 		let circle = circles[i];
 		circle.draw();
 		circle.startAnimation();
 	}
 
-	for(let i = 0; i < squares.length; i++) {
+	for(let i = 0, max = squares.length; i < max; i++) {
 		let square = squares[i];
 		square.draw();
 		square.startAnimation();
 	}
 
-	for(let i = 0; i < triangles.length; i++) {
+	for(let i = 0, max = triangles.length; i < max; i++) {
 		let triangle = triangles[i];
 		triangle.draw();
 		triangle.startAnimation();
