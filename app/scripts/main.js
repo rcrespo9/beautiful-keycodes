@@ -151,6 +151,7 @@ class Triangle extends Shape {
 		let yCoordsAvg = yCoordsTotal / Object.keys(triangleCoords).length;
 
 		let triangle = document.createElementNS(svgns, 'polygon');
+		triangle.setAttributeNS(null, 'transform', `translate(${xCoordsAvg} ${yCoordsAvg}) rotate(45 ${xCoordsAvg} ${yCoordsAvg})`);
 		triangle.setAttributeNS(null, 'points', `${triangleCoords.firstCoord.x},${triangleCoords.firstCoord.y} ${triangleCoords.secondCoord.x},${triangleCoords.secondCoord.y} ${triangleCoords.thirdCoord.x},${triangleCoords.thirdCoord.y}`);
 		triangle.setAttributeNS(null, 'fill', darkBlue);
 
