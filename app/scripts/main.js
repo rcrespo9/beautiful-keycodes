@@ -160,7 +160,7 @@ class ShapesGenerator {
 		this.shapesSvg.setAttribute('height', window.innerHeight);
 	}
 
-	buildShapes() {
+	insertShapes() {
 		const numShapes = Math.ceil((this.keycode / 3) * 1) / 1;
 
 		// if svg has shapes, clear it out
@@ -200,7 +200,7 @@ class ShapesGenerator {
 
 	init() {
 		this.fullScreenShapesSvg();
-		this.buildShapes();
+		this.insertShapes();
 	}
 }
 
