@@ -37,7 +37,7 @@ class KeyCodeDisplay {
 		window.addEventListener('keydown', function(e) {
 			let keyCode = e.keyCode;
 			let key = e.key;
-			let shapes = new ShapesGenerator(keyCode);
+			let shapes = new StarsGenerator(keyCode);
 
 			self.insertKeyCode(keyCode);
 			self.insertKey(keyCode, key);
@@ -46,108 +46,33 @@ class KeyCodeDisplay {
 	}
 }
 
-class Shape {
-	constructor(xPos, yPos) {
+class Star {
+	constructor(radius, xPos, yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.svgns = 'http://www.w3.org/2000/svg';
-		this.globalLineWidth = 3;
-		this.darkBlue = '#16243c';
-	}
-}
-
-class Square extends Shape {
-	constructor(sideLength, xPos, yPos) {
-		super(xPos, yPos);
-		this.sideLength = sideLength;
-	}
-
-	draw() {
-		let square = document.createElementNS(this.svgns, 'rect');
-		square.setAttributeNS(null, 'x', this.xPos);
-		square.setAttributeNS(null, 'y', this.yPos);
-		square.setAttributeNS(null, 'width', this.sideLength);
-		square.setAttributeNS(null, 'height', this.sideLength);
-		square.setAttributeNS(null, 'stroke', this.darkBlue);
-		square.setAttributeNS(null, 'stroke-width', this.globalLineWidth);
-		square.setAttributeNS(null, 'fill', 'none');
-
-		return square;
-	}
-}
-
-class Circle extends Shape {
-	constructor(radius, xPos, yPos) {
-		super(xPos, yPos);
 		this.radius = radius;
+		this.svgns = 'http://www.w3.org/2000/svg';
+		this.color = '#16243c';
 	}
 
 	draw() {
-		let circle = document.createElementNS(this.svgns, 'circle');
-		circle.setAttributeNS(null, 'cx', this.xPos);
-		circle.setAttributeNS(null, 'cy', this.yPos);
-		circle.setAttributeNS(null, 'r', this.radius);
-		circle.setAttributeNS(null, 'stroke', this.darkBlue);
-		circle.setAttributeNS(null, 'stroke-width', this.globalLineWidth);
-		circle.setAttributeNS(null, 'fill', 'none');
+		let star = document.createElementNS(this.svgns, 'circle');
+		star.setAttributeNS(null, 'cx', this.xPos);
+		star.setAttributeNS(null, 'cy', this.yPos);
+		star.setAttributeNS(null, 'r', this.radius);
+		star.setAttributeNS(null, 'fill', this.color);
 
-		return circle;
+		return star;
 	}
 }
 
-class Triangle extends Shape {
-	constructor(xVar, yVar, xPos, yPos) {
-		super(xPos, yPos);
-		this.xVar = xVar;
-		this.yVar = yVar;
-	}
 
-	coordinatesAvg(obj, coordinate) {
-		let total = Object.keys(obj)
-							.map(key => obj[key][coordinate])
-							.reduce((previous, current) => previous + current);
-
-		let avg = total / Object.keys(obj).length;
-
-		return avg;
-	}
-
-	draw() {
-		let triangleCoords = {
-			firstCoord: {
-				x: this.xPos,
-				y: this.yPos
-			},
-
-			secondCoord: {
-				x: this.xPos - this.xVar,
-				y: this.yPos + this.yVar
-			},
-
-			thirdCoord: {
-				x: this.xPos + this.xVar,
-				y: this.yPos + this.yVar
-			}
-		};
-
-		// let xCoordsAvg = this.coordinatesAvg(triangleCoords, 'x');
-		// let yCoordsAvg = this.coordinatesAvg(triangleCoords, 'y');
-
-		let triangle = document.createElementNS(this.svgns, 'polygon');
-		// triangle.setAttributeNS(null, 'transform', `translate(${xCoordsAvg} ${yCoordsAvg}) rotate(45 ${xCoordsAvg} ${yCoordsAvg})`);
-		triangle.setAttributeNS(null, 'points', `${triangleCoords.firstCoord.x},${triangleCoords.firstCoord.y} ${triangleCoords.secondCoord.x},${triangleCoords.secondCoord.y} ${triangleCoords.thirdCoord.x},${triangleCoords.thirdCoord.y}`);
-		triangle.setAttributeNS(null, 'fill', this.darkBlue);
-
-		return triangle;
-	}
-}
-
-class ShapesGenerator {
+class StarsGenerator {
 	constructor(keycode) {
-		this.shapesSvg = document.getElementById('js-shapes');
-		this.shapesRect = this.shapesSvg.getBoundingClientRect();
-		this.shapesSvgWidth = this.shapesRect.width;
-		this.shapesSvgHeight = this.shapesRect.height;
+		this.starsSvg = document.getElementById('js-shapes');
+		this.starsRect = this.starsSvg.getBoundingClientRect();
+		this.starsSvgWidth = this.starsRect.width;
+		this.starsSvgHeight = this.starsRect.height;
 		this.keycode = keycode;
 	}
 
@@ -156,45 +81,28 @@ class ShapesGenerator {
 	}
 
 	fullScreenShapesSvg() {
-		this.shapesSvg.setAttribute('width', window.innerWidth);
-		this.shapesSvg.setAttribute('height', window.innerHeight);
+		this.starsSvg.setAttribute('width', window.innerWidth);
+		this.starsSvg.setAttribute('height', window.innerHeight);
 	}
 
 	insertShapes() {
-		const numShapes = Math.ceil((this.keycode / 3) * 1) / 1;
+		const numStars = this.keycode;
 
-		// if svg has shapes, clear it out
-		if(this.shapesSvg.hasChildNodes()) {
-			while (this.shapesSvg.firstChild) {
-			    this.shapesSvg.removeChild(this.shapesSvg.firstChild);
+		// if svg has stars, clear it out
+		if(this.starsSvg.hasChildNodes()) {
+			while (this.starsSvg.firstChild) {
+			    this.starsSvg.removeChild(this.starsSvg.firstChild);
 			}
 		}
 
-		// add squares
-		for(let i = 0, max = numShapes; i < max; i++) {
-			let randX = this.getRandomNum(0, this.shapesSvgWidth);
-			let randY = this.getRandomNum(0, this.shapesSvgHeight);
-			let square = new Square(12, randX, randY);
+		// add stars
+		for(let i = 0, max = numStars; i < max; i++) {
+			let randRadius = this.getRandomNum(1, 4)
+			let randX = this.getRandomNum(0, this.starsSvgWidth);
+			let randY = this.getRandomNum(0, this.starsSvgHeight);
+			let circle = new Star(randRadius, randX, randY);
 
-			this.shapesSvg.appendChild(square.draw());
-		}
-
-		// add circles
-		for(let i = 0, max = numShapes; i < max; i++) {
-			let randX = this.getRandomNum(0, this.shapesSvgWidth);
-			let randY = this.getRandomNum(0, this.shapesSvgHeight);
-			let circle = new Circle(6, randX, randY);
-
-			this.shapesSvg.appendChild(circle.draw());
-		}
-
-		// add triangles
-		for(let i = 0, max = numShapes; i < max; i++) {
-			let randX = this.getRandomNum(0, this.shapesSvgWidth);
-			let randY = this.getRandomNum(0, this.shapesSvgHeight);
-			let triangle = new Triangle(10, 12, randX, randY);
-
-			this.shapesSvg.appendChild(triangle.draw());
+			this.starsSvg.appendChild(circle.draw());
 		}
 	}
 
