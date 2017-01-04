@@ -104,7 +104,7 @@ class StarsGenerator {
 
 		// add stars
 		for(let i = 0, max = numStars; i < max; i++) {
-			let randRadius = this.getRandomNum(0.5, 2);
+			let randRadius = this.getRandomNum(0.5, 2.5);
 			let randX = this.getRandomNum(0, this.starsSvgWidth);
 			let randY = this.getRandomNum(0, this.starsSvgHeight);
 			let randColor = this.getRandomStarColor();
@@ -114,9 +114,23 @@ class StarsGenerator {
 		}
 	}
 
+	twinkleStars() {
+		let stars = document.querySelectorAll('circle') || '';
+		let self = this;
+
+		if(stars.length) {
+			stars.forEach(star => {
+				let randomDelay = self.getRandomNum(0, 0.5);
+
+				TweenMax.to(star, 1, {autoAlpha: 0.4, repeat: -1, delay: randomDelay, repeatDelay: randomDelay, yoyo: true, ease: Bounce.easeInOut});
+			});
+		}
+	}
+
 	init() {
 		this.fullScreenStarsSvg();
 		this.insertStars();
+		this.twinkleStars();
 	}
 }
 
