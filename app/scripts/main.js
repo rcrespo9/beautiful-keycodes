@@ -87,12 +87,12 @@ class StarsGenerator {
 		return colors[parseInt(randColorIdx, 10)];
 	}
 
-	fullScreenShapesSvg() {
+	fullScreenStarsSvg() {
 		this.starsSvg.setAttribute('width', window.innerWidth);
 		this.starsSvg.setAttribute('height', window.innerHeight);
 	}
 
-	insertShapes() {
+	insertStars() {
 		const numStars = this.keycode;
 
 		// if svg has stars, clear it out
@@ -104,7 +104,7 @@ class StarsGenerator {
 
 		// add stars
 		for(let i = 0, max = numStars; i < max; i++) {
-			let randRadius = this.getRandomNum(1, 3);
+			let randRadius = this.getRandomNum(0.5, 2);
 			let randX = this.getRandomNum(0, this.starsSvgWidth);
 			let randY = this.getRandomNum(0, this.starsSvgHeight);
 			let randColor = this.getRandomStarColor();
@@ -115,8 +115,8 @@ class StarsGenerator {
 	}
 
 	init() {
-		this.fullScreenShapesSvg();
-		this.insertShapes();
+		this.fullScreenStarsSvg();
+		this.insertStars();
 	}
 }
 
