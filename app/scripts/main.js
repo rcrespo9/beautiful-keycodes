@@ -47,12 +47,12 @@ class KeyCodeDisplay {
 }
 
 class Star {
-	constructor(radius, xPos, yPos) {
+	constructor(radius, xPos, yPos, starColor) {
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.radius = radius;
 		this.svgns = 'http://www.w3.org/2000/svg';
-		this.color = '#16243c';
+		this.starColor = starColor;
 	}
 
 	draw() {
@@ -60,7 +60,7 @@ class Star {
 		star.setAttributeNS(null, 'cx', this.xPos);
 		star.setAttributeNS(null, 'cy', this.yPos);
 		star.setAttributeNS(null, 'r', this.radius);
-		star.setAttributeNS(null, 'fill', this.color);
+		star.setAttributeNS(null, 'fill', this.starColor);
 
 		return star;
 	}
@@ -80,6 +80,13 @@ class StarsGenerator {
 		return Math.random() * (max - min) + min;
 	}
 
+	getRandomStarColor() {
+		const colors = ['#9bb0ff', '#aabfff', '#cad7ff', '#f8f7ff', '#fff4ea', '#ffd2a1', '#ffcc6f']; // obafgkm table
+		const randColorIdx = this.getRandomNum(0, colors.length);
+
+		return colors[parseInt(randColorIdx, 10)];
+	}
+
 	fullScreenShapesSvg() {
 		this.starsSvg.setAttribute('width', window.innerWidth);
 		this.starsSvg.setAttribute('height', window.innerHeight);
@@ -97,10 +104,11 @@ class StarsGenerator {
 
 		// add stars
 		for(let i = 0, max = numStars; i < max; i++) {
-			let randRadius = this.getRandomNum(1, 4)
+			let randRadius = this.getRandomNum(1, 3);
 			let randX = this.getRandomNum(0, this.starsSvgWidth);
 			let randY = this.getRandomNum(0, this.starsSvgHeight);
-			let circle = new Star(randRadius, randX, randY);
+			let randColor = this.getRandomStarColor();
+			let circle = new Star(randRadius, randX, randY, randColor);
 
 			this.starsSvg.appendChild(circle.draw());
 		}
