@@ -37,9 +37,11 @@ class KeyCodeDisplay {
 		window.addEventListener('keydown', function(e) {
 			let keyCode = e.keyCode;
 			let key = e.key;
+			let shapes = new ShapesGenerator(keyCode);
 
 			self.insertKeyCode(keyCode);
 			self.insertKey(keyCode, key);
+			shapes.init();
 		});
 	}
 }
@@ -141,12 +143,12 @@ class Triangle extends Shape {
 }
 
 class ShapesGenerator {
-	constructor(numShapes) {
+	constructor(keycode) {
 		this.shapesSvg = document.getElementById('js-shapes');
 		this.shapesRect = this.shapesSvg.getBoundingClientRect();
 		this.shapesSvgWidth = this.shapesRect.width;
 		this.shapesSvgHeight = this.shapesRect.height;
-		this.numShapes = numShapes;
+		this.keycode = keycode;
 	}
 
 	getRandomNum(min, max) {
@@ -159,14 +161,41 @@ class ShapesGenerator {
 	}
 
 	buildShapes() {
-		// const square = new Square(12, utils.getRandomNum(0, shapesRect.width), utils.getRandomNum(0, shapesRect.height));
-		// shapes.appendChild(square.draw());
+		const numShapes = Math.ceil((this.keycode / 3) * 1) / 1;
 
-		// const circle = new Circle(6, utils.getRandomNum(0, shapesRect.width), utils.getRandomNum(0, shapesRect.height));
-		// shapes.appendChild(circle.draw());
+		// if svg has shapes, clear it out
+		if(this.shapesSvg.hasChildNodes()) {
+			while (this.shapesSvg.firstChild) {
+			    this.shapesSvg.removeChild(this.shapesSvg.firstChild);
+			}
+		}
 
-		// const triangle = new Triangle(10, 12, utils.getRandomNum(0, shapesRect.width), utils.getRandomNum(0, shapesRect.height));
-		// shapes.appendChild(triangle.draw());
+		// add squares
+		for(let i = 0, max = numShapes; i < max; i++) {
+			let randX = this.getRandomNum(0, this.shapesSvgWidth);
+			let randY = this.getRandomNum(0, this.shapesSvgHeight);
+			let square = new Square(12, randX, randY);
+
+			this.shapesSvg.appendChild(square.draw());
+		}
+
+		// add circles
+		for(let i = 0, max = numShapes; i < max; i++) {
+			let randX = this.getRandomNum(0, this.shapesSvgWidth);
+			let randY = this.getRandomNum(0, this.shapesSvgHeight);
+			let circle = new Circle(6, randX, randY);
+
+			this.shapesSvg.appendChild(circle.draw());
+		}
+
+		// add triangles
+		for(let i = 0, max = numShapes; i < max; i++) {
+			let randX = this.getRandomNum(0, this.shapesSvgWidth);
+			let randY = this.getRandomNum(0, this.shapesSvgHeight);
+			let triangle = new Triangle(10, 12, randX, randY);
+
+			this.shapesSvg.appendChild(triangle.draw());
+		}
 	}
 
 	init() {
@@ -178,6 +207,7 @@ class ShapesGenerator {
 class Main {
 	constructor() {
 		let keyCodeDisplay = new KeyCodeDisplay('js-keycode', 'js-key');
+
 		keyCodeDisplay.init();
 	}
 }
