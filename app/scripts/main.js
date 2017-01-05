@@ -125,7 +125,7 @@ class StarsGenerator {
 
 		if(stars.length) {
 			stars.forEach(star => {
-				let randomDelay = self.getRandomNum(0, 0.25);
+				let randomDelay = self.getRandomNum(0, 1);
 
 				TweenMax.to(star, .75, {autoAlpha: 0.4, repeat: -1, delay: randomDelay, repeatDelay: randomDelay, yoyo: true, ease: Power0.easeNone});
 			});
