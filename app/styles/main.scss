@@ -3,7 +3,9 @@
 
 // perfect fourth on modular scale
 
-$pink: #fff;
+$pink: #E39AA3;
+$white: #FCFCFD;
+$grey: #D5D5D7;
 
 /*------------------------------------*\
   #GLOBAL
@@ -37,8 +39,8 @@ body {
 }
 
 body {
-  background: #0D0019;
-  color: #fff;
+  background: #121326;
+  color: $white;
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   text-align: center;
   -webkit-font-smoothing: antialiased;
@@ -78,10 +80,10 @@ body {
 .stage__key {
   display: inline-block;
   margin-bottom: 0;
-  padding: .563rem 1.333rem .75rem;
+  padding: .75rem 1.333rem 1rem;
   border: 1px solid;
   border-radius: 4px;
-  color: $pink;
+  color: $white;
   font-size: 1.777rem;
   text-transform: lowercase;
 }
@@ -98,14 +100,15 @@ body {
   font-size: 1.333rem;
 }
 
+.attribution__text {
+  margin: 0;
+  color: $grey;
+}
+
 .attribution__text a {
   color: $pink;
   font-weight: 700;
   text-decoration: none;
-}
-
-.attribution__text {
-  margin: 0;
 }
 
 /*------------------------------------*\
