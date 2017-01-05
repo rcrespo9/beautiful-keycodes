@@ -1,5 +1,10 @@
 'use strict';
 
+/**
+ * On keydown, displays large keycode, key, and generates stars.
+ * Number of stars determined by keycode.
+ */
+
 class KeyCodeDisplay {
 	constructor(numberElId, textElId) {
 		this.numberElId = document.getElementById(numberElId);
@@ -46,6 +51,9 @@ class KeyCodeDisplay {
 	}
 }
 
+/**
+ * Star creation.
+ */
 class Star {
 	constructor(radius, xPos, yPos, starColor) {
 		this.xPos = xPos;
@@ -56,7 +64,8 @@ class Star {
 	}
 
 	draw() {
-		let star = document.createElementNS(this.svgns, 'circle');
+		const star = document.createElementNS(this.svgns, 'circle');
+
 		star.setAttributeNS(null, 'cx', this.xPos);
 		star.setAttributeNS(null, 'cy', this.yPos);
 		star.setAttributeNS(null, 'r', this.radius);
@@ -66,7 +75,9 @@ class Star {
 	}
 }
 
-
+/**
+ * Generates x number of randomly colored, twinkling stars.
+ */
 class StarsGenerator {
 	constructor(keycode) {
 		this.starsSvg = document.getElementById('js-stars');
@@ -88,7 +99,7 @@ class StarsGenerator {
 		return colors[parseInt(randColorIdx, 10)];
 	}
 
-	fullScreenStarsSvg() {
+	fullScreenStars() {
 		this.starsSvg.setAttribute('width', window.innerWidth);
 		this.starsSvg.setAttribute('height', window.innerHeight);
 	}
@@ -133,15 +144,18 @@ class StarsGenerator {
 	}
 
 	init() {
-		this.fullScreenStarsSvg();
+		this.fullScreenStars();
 		this.insertStars();
 		this.twinkleStars();
 	}
 }
 
+/**
+ * Initialize keycode display.
+ */
 class Main {
 	constructor() {
-		let keyCodeDisplay = new KeyCodeDisplay('js-keycode', 'js-key');
+		const keyCodeDisplay = new KeyCodeDisplay('js-keycode', 'js-key');
 
 		keyCodeDisplay.init();
 	}
