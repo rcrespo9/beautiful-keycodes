@@ -4,7 +4,6 @@
  * On keydown, displays large keycode, key, and generates stars.
  * Number of stars determined by keycode.
  */
-
 class KeyCodeDisplay {
 	constructor(numberElId, textElId) {
 		this.numberElId = document.getElementById(numberElId);

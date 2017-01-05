@@ -1,7 +1,13 @@
 // bower:scss
 // endbower
 
-// perfect fourth on modular scale
+/**
+ * Rem units based on perfect fourth on the modular scale.
+*/
+
+/*------------------------------------*\
+	#VARIABLES
+\*------------------------------------*/
 
 $space: #1a1a1a;
 $white: #fff;
@@ -9,133 +15,137 @@ $light-grey: #CDDAE2;
 $dark-blue: #6692ff;
 
 /*------------------------------------*\
-  #GLOBAL
+	#GLOBAL
 \*------------------------------------*/
 
 *,
 *:before,
 *:after {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 html,
 body,
 .wrapper,
 .stage {
-  height: 100%;
+	height: 100%;
 }
 
 html,
 body {
-  font-size: 10px;
-  overflow: hidden;
+	font-size: 10px;
+	overflow: hidden;
 
-  @media(min-width: 40em) {
-    font-size: 16px;
-  }
+	@media(min-width: 40em) {
+		font-size: 16px;
+	}
 
-  @media(min-width: 105em) {
-    font-size: 18px;
-  }
+	@media(min-width: 105em) {
+		font-size: 18px;
+	}
 }
 
 body {
-  background: $space;
-  color: $white;
-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  text-align: center;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	background: $space;
+	color: $white;
+	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	text-align: center;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 .wrapper {
-  position: relative;
-  z-index: 2;
+	position: relative;
+	z-index: 2;
 }
 
 /*------------------------------------*\
-  #KEYCODE STAGE
+	#KEYCODE STAGE
 \*------------------------------------*/
 
 .stage {
-  display: table;
-  width: 100%;
+	display: table;
+	width: 100%;
 }
 
 .stage__inner {
-  display: table-cell;
-  vertical-align: middle;
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .stage__inner p {
-  margin-top: 0;
+	margin-top: 0;
 }
 
 .stage__keycode {
-  line-height: 1;
-  margin-bottom: 1.333rem;
-  font-size: 41.956vmin;
-  font-weight: 600;
+	line-height: 1;
+	margin-bottom: 1.333rem;
+	font-size: 41.956vmin;
+	font-weight: 600;
 }
 
 .stage__key {
-  display: inline-block;
-  margin-bottom: 0;
-  padding: .75rem 1.333rem 1rem;
-  border: 1px solid;
-  border-radius: 4px;
-  color: $white;
-  font-size: 1.777rem;
-  text-transform: lowercase;
+	display: inline-block;
+	margin-bottom: 0;
+	padding: .75rem 1.333rem 1rem;
+	border: 1px solid;
+	border-radius: 4px;
+	color: $white;
+	font-size: 1.777rem;
+	text-transform: lowercase;
 }
 
 /*------------------------------------*\
-  #ATTRIBUTION
+	#ATTRIBUTION
 \*------------------------------------*/
 
 .attribution {
-  position: absolute;
-  left: 0;
-  bottom: 1rem;
-  width: 100%;
-  font-size: 1.333rem;
+	position: absolute;
+	left: 0;
+	bottom: 1rem;
+	width: 100%;
+	font-size: 1.333rem;
 }
 
 .attribution__text {
-  margin: 0;
-  color: $light-grey;
+	margin: 0;
+	color: $light-grey;
 }
 
 .attribution__text a {
-  color: $dark-blue;
-  font-weight: 700;
-  text-decoration: none;
+	color: $dark-blue;
+	font-weight: 700;
+	text-decoration: none;
+	transition: color .5s ease-in-out;
 }
 
-// .attribution__text a:hover {
-// }
+.attribution__text a:hover {
+	color: darken($dark-blue, 7%);
+}
 
 /*------------------------------------*\
-  #SHAPES
+	#SHAPES
 \*------------------------------------*/
+
 .stars {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
 }
 
+
 /*------------------------------------*\
-  #BROWSER UPGRADE
+	#BROWSER UPGRADE
 \*------------------------------------*/
 
 .browserupgrade {
-  margin: 0.2rem 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2rem 0;
+	margin: 0.2rem 0;
+	background: #ccc;
+	color: #000;
+	padding: 0.2rem 0;
 }
