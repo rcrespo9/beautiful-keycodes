@@ -69,11 +69,12 @@ class Star {
 
 class StarsGenerator {
 	constructor(keycode) {
-		this.starsSvg = document.getElementById('js-shapes');
+		this.starsSvg = document.getElementById('js-stars');
 		this.starsRect = this.starsSvg.getBoundingClientRect();
 		this.starsSvgWidth = this.starsRect.width;
 		this.starsSvgHeight = this.starsRect.height;
 		this.keycode = keycode;
+		this.svgns = 'http://www.w3.org/2000/svg';
 	}
 
 	getRandomNum(min, max) {
@@ -82,7 +83,7 @@ class StarsGenerator {
 
 	getRandomStarColor() {
 		const colors = ['#9bb0ff', '#aabfff', '#cad7ff', '#f8f7ff', '#fff4ea', '#ffd2a1', '#ffcc6f']; // obafgkm table
-		const randColorIdx = this.getRandomNum(0, colors.length);
+		const randColorIdx = this.getRandomNum(0, colors.length - 1);
 
 		return colors[parseInt(randColorIdx, 10)];
 	}
@@ -94,6 +95,8 @@ class StarsGenerator {
 
 	insertStars() {
 		const numStars = this.keycode;
+		const g = document.createElementNS(this.svgns, 'g');
+		g.classList = 'stars__inner';
 
 		// if svg has stars, clear it out
 		if(this.starsSvg.hasChildNodes()) {
@@ -110,19 +113,21 @@ class StarsGenerator {
 			let randColor = this.getRandomStarColor();
 			let circle = new Star(randRadius, randX, randY, randColor);
 
-			this.starsSvg.appendChild(circle.draw());
+			g.appendChild(circle.draw());
 		}
+
+		this.starsSvg.appendChild(g);
 	}
 
 	twinkleStars() {
-		let stars = document.querySelectorAll('circle') || '';
-		let self = this;
+		const stars = document.querySelectorAll('circle') || '';
+		const self = this;
 
 		if(stars.length) {
 			stars.forEach(star => {
-				let randomDelay = self.getRandomNum(0, 0.5);
+				let randomDelay = self.getRandomNum(0, 0.25);
 
-				TweenMax.to(star, 1, {autoAlpha: 0.4, repeat: -1, delay: randomDelay, repeatDelay: randomDelay, yoyo: true, ease: Bounce.easeInOut});
+				TweenMax.to(star, .75, {autoAlpha: 0.4, repeat: -1, delay: randomDelay, repeatDelay: randomDelay, yoyo: true, ease: Power0.easeNone});
 			});
 		}
 	}
