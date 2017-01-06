@@ -74,6 +74,11 @@ class Star {
 	}
 }
 
+class ShootingStar {
+	constructor() {
+	}
+}
+
 /**
  * Generates x number of randomly colored, twinkling stars.
  */
@@ -135,9 +140,9 @@ class StarsGenerator {
 
 		if(stars.length) {
 			stars.forEach(star => {
-				let randomDelay = self.getRandomNum(0, 1);
+				let randomDelay = self.getRandomNum(0, .75);
 
-				TweenMax.to(star, .75, {autoAlpha: 0.4, repeat: -1, delay: randomDelay, repeatDelay: randomDelay, yoyo: true, ease: Power0.easeNone});
+				TweenMax.to(star, .5, {autoAlpha: 0.25, repeat: -1, delay: randomDelay, repeatDelay: randomDelay, yoyo: true, ease: Power0.easeNone});
 			});
 		}
 	}
