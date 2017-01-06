@@ -75,7 +75,9 @@ class Star {
 }
 
 class ShootingStar {
-	constructor() {
+	constructor(beamSize, speed) {
+		this.beamSize = beamSize;
+		this.speed = speed;
 	}
 }
 
