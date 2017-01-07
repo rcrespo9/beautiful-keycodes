@@ -12,7 +12,10 @@ class KeyCodeDisplay {
 
 	keyFormatter(keycode, key) {
 		const specialKeys = {
+			8: 'delete',
+			9: 'tab',
 			20: 'caps lock',
+			27: 'escape',
 			32: 'spacebar',
 			37: 'arrow left',
 			38: 'arrow up',
@@ -35,12 +38,22 @@ class KeyCodeDisplay {
 		this.textElId.innerHTML = this.keyFormatter(keycode, key);
 	}
 
+	keyIdentifierConverter(keyIdentifier) {
+		if(keyIdentifier.includes('U')) {
+			let unicode = keyIdentifier.split('+')[1];
+
+			return String.fromCharCode(parseInt(unicode,16));
+		} else {
+			return keyIdentifier;
+		}
+	}
+
 	init() {
 		const self = this; // defining this as self in order to refer to internal methods within window event listener
 
 		window.addEventListener('keydown', function(e) {
 			let keyCode = e.keyCode;
-			let key = e.key;
+			let key = e.key || self.keyIdentifierConverter(e.keyIdentifier);
 			let shapes = new StarsGenerator(keyCode);
 
 			self.insertKeyCode(keyCode);

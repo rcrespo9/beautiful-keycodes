@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Beautiful Keycodes</title>
+    <title>Celestial Keycodes</title>
 
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700">
@@ -19,7 +19,7 @@
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-    
+
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="/bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
@@ -27,42 +27,42 @@
   <body>
     <!--[if lt IE 10]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-    
-    <div class="wrapper">
-      <div class="stage">
-        <div class="stage__inner">
-          <p class="stage__keycode" id="js-keycode"></p>
-          <p class="stage__key" id="js-key">Starting typing to see keycode</p>
+      <![endif]-->
+
+      <div class="wrapper">
+        <div class="stage">
+          <div class="stage__inner">
+            <p class="stage__keycode" id="js-keycode"></p>
+            <p class="stage__key" id="js-key">Starting typing to see keycode</p>
+          </div>
+        </div>
+
+        <div class="attribution">
+          <p class="attribution__text">Made in New York City by <a href="http://rudycrespo.com" id="js-attribution-name" target="_blank">Rudy Crespo</a></p>
         </div>
       </div>
 
-      <div class="attribution">
-        <p class="attribution__text">Made in New York City by <a href="http://rudycrespo.com" id="js-attribution-name" target="_blank">Rudy Crespo</a></p>
-      </div>
-    </div>
+      <svg class="stars" id="js-stars" xmlns="http://www.w3.org/2000/svg"></svg>
 
-	<svg class="stars" id="js-stars" xmlns="http://www.w3.org/2000/svg"></svg>
-    
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <script>
-      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-      e.src='https://www.google-analytics.com/analytics.js';
-      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-XXXXX-X');ga('send','pageview');
-    </script>
+      <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+      <script>
+        (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+          function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+        e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+        e.src='https://www.google-analytics.com/analytics.js';
+        r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+        ga('create','UA-XXXXX-X');ga('send','pageview');
+      </script>
 
-    <!-- build:js scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="/bower_components/modernizr/modernizr.js"></script>
-    <script src="/bower_components/gsap/src/uncompressed/TweenMax.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
-    
-    <!-- build:js scripts/main.js -->
-    <script src="scripts/main.js"></script>
-    <!-- endbuild -->
+      <!-- build:js scripts/vendor.js -->
+      <!-- bower:js -->
+      <script src="/bower_components/modernizr/modernizr.js"></script>
+      <script src="/bower_components/gsap/src/uncompressed/TweenMax.js"></script>
+      <!-- endbower -->
+      <!-- endbuild -->
+
+      <!-- build:js scripts/main.js -->
+      <script src="scripts/main.js"></script>
+      <!-- endbuild -->
   </body>
 </html>
