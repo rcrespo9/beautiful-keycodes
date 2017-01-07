@@ -51,15 +51,24 @@ class KeyCodeDisplay {
 }
 
 /**
- * Star creation.
+ * Star parent class.
  */
-class Star {
-	constructor(radius, xPos, yPos, starColor) {
+class LuminousSphere {
+	constructor(radius, xPos, yPos, color) {
+		this.radius = radius;
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.radius = radius;
+		this.color = color;
 		this.svgns = 'http://www.w3.org/2000/svg';
-		this.starColor = starColor;
+	}
+}
+
+/**
+ * Star creation.
+ */
+class Star extends LuminousSphere {
+	constructor(radius, xPos, yPos, color) {
+		super(radius, xPos, yPos, color);
 	}
 
 	draw() {
@@ -68,18 +77,28 @@ class Star {
 		star.setAttributeNS(null, 'cx', this.xPos);
 		star.setAttributeNS(null, 'cy', this.yPos);
 		star.setAttributeNS(null, 'r', this.radius);
-		star.setAttributeNS(null, 'fill', this.starColor);
+		star.setAttributeNS(null, 'fill', this.color);
 
 		return star;
 	}
 }
 
-class ShootingStar {
-	constructor(beamSize, color, speed) {
+/**
+ * Shooting star creation.
+ */
+class ShootingStar extends LuminousSphere {
+	constructor(xPos, yPos, color, beamSize, speed) {
+		super(xPos, yPos, color);
 		this.beamSize = beamSize;
-		this.color = color;
 		this.speed = speed;
 	}
+
+	draw() {
+		const shootingStar = document.createElementNS(this.svgns, '');
+	}
+
+	// launch() {		
+	// }
 }
 
 /**
