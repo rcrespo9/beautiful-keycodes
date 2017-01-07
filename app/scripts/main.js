@@ -87,10 +87,8 @@ class Star extends LuminousSphere {
  * Shooting star creation.
  */
 class ShootingStar extends LuminousSphere {
-	constructor(xPos, yPos, color, beamSize, speed) {
+	constructor(xPos, yPos, color) {
 		super(xPos, yPos, color);
-		this.beamSize = beamSize;
-		this.speed = speed;
 	}
 
 	draw() {
