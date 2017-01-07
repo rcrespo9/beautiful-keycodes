@@ -51,24 +51,15 @@ class KeyCodeDisplay {
 }
 
 /**
- * Star parent class.
+ * Star creation.
  */
-class LuminousSphere {
+class Star {
 	constructor(radius, xPos, yPos, color) {
 		this.radius = radius;
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.color = color;
 		this.svgns = 'http://www.w3.org/2000/svg';
-	}
-}
-
-/**
- * Star creation.
- */
-class Star extends LuminousSphere {
-	constructor(radius, xPos, yPos, color) {
-		super(radius, xPos, yPos, color);
 	}
 
 	draw() {
@@ -81,22 +72,6 @@ class Star extends LuminousSphere {
 
 		return star;
 	}
-}
-
-/**
- * Shooting star creation.
- */
-class ShootingStar extends LuminousSphere {
-	constructor(xPos, yPos, color) {
-		super(xPos, yPos, color);
-	}
-
-	draw() {
-		const shootingStar = document.createElementNS(this.svgns, '');
-	}
-
-	// launch() {		
-	// }
 }
 
 /**
