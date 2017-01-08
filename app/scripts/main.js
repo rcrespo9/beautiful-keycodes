@@ -40,7 +40,7 @@ class KeyCodeDisplay {
 
 	keyIdentifierConverter(keyIdentifier) {
 		if(keyIdentifier.includes('U')) {
-			let unicode = keyIdentifier.split('+')[1];
+			const unicode = keyIdentifier.split('+')[1];
 
 			return String.fromCharCode(parseInt(unicode,16));
 		} else {
@@ -52,9 +52,14 @@ class KeyCodeDisplay {
 		const self = this; // defining this as self in order to refer to internal methods within window event listener
 
 		window.addEventListener('keydown', function(e) {
-			let keyCode = e.keyCode;
-			let key = e.key || self.keyIdentifierConverter(e.keyIdentifier);
-			let shapes = new StarsGenerator(keyCode);
+			const numberEl = self.numberElId;
+			const keyCode = e.keyCode;
+			const key = e.key || self.keyIdentifierConverter(e.keyIdentifier);
+			const shapes = new StarsGenerator(keyCode);
+
+			if(numberEl.style.display.length === 0) {
+				numberEl.style.display = 'block';
+			}
 
 			self.insertKeyCode(keyCode);
 			self.insertKey(keyCode, key);
