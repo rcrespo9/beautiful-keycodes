@@ -119,7 +119,6 @@ class StarsGenerator {
 	insertStars() {
 		const numStars = this.keycode;
 		const g = document.createElementNS(this.svgns, 'g');
-		g.classList = 'stars__inner';
 
 		// if svg has stars, clear it out
 		if(this.starsSvg.hasChildNodes()) {
@@ -143,7 +142,7 @@ class StarsGenerator {
 	}
 
 	twinkleStars() {
-		const stars = document.querySelectorAll('circle') || '';
+		const stars = Array.from(document.querySelectorAll('circle')) || '';
 		const self = this;
 
 		if(stars.length) {
