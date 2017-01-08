@@ -39,7 +39,7 @@ class KeyCodeDisplay {
 	}
 
 	keyIdentifierConverter(keyIdentifier) {
-		if(keyIdentifier.includes('U')) {
+		if(keyIdentifier.startsWith('U')) {
 			const unicode = keyIdentifier.split('+')[1];
 
 			return String.fromCharCode(parseInt(unicode,16));
@@ -177,4 +177,4 @@ class Main {
 	}
 }
 
-document.addEventListener("DOMContentLoaded", (e) => new Main());
+document.addEventListener('DOMContentLoaded', (e) => new Main());
