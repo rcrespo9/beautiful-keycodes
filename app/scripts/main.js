@@ -147,7 +147,7 @@ class StarsGenerator {
 	}
 
 	twinkleStars() {
-		const stars = Array.from(document.querySelectorAll('circle')) || '';
+		const stars = Array.from(this.starsSvg.querySelectorAll('circle')) || '';
 		const self = this;
 
 		if(stars.length) {
